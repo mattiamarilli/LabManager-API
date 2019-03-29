@@ -4,10 +4,10 @@
  * 29/03/19
  */
 
-class StudenteController {
+class StudentController {
 
     // GET /admin/studente
-    static function getStudenti($req, $res, $service, $app){
+    static function getStudents($req, $res, $service, $app){
 
         $stm = $app->db->prepare('SELECT id_studente, studente.nome, cognome, username, classe.id_classe, classe.nome AS classe, id_gruppo FROM studente INNER JOIN classe ON classe.id_classe = studente.id_classe');
         $stm->execute();
@@ -30,8 +30,8 @@ class StudenteController {
     }
 
     // POST /admin/studente
-    static function addStudente($req, $res, $service, $app){
-        
+    static function addStudent($req, $res, $service, $app){
+
         $res->json([]);
 
     }

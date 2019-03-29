@@ -23,10 +23,16 @@ $klein->respond(function ($request, $response, $service, $app) {
 
 $klein->respond('GET', '/', ['IndexController', 'get']);
 
-$klein->respond('GET', '/admin/studente', ['AdminController', 'getStudenti']);
+// Admin
+
+$klein->respond('GET', '/admin/studente', ['StudentController', 'getStudents']);
+$klein->respond('POST', '/admin/studente', ['StudentController', 'addStudent']);
 
 
+// User
 
+$klein->respond('POST', '/user/gruppo', ['GroupController', 'joinGroup']);
+$klein->respond('DELETE', '/user/gruppo', ['GroupController', 'leaveGroup']);
 
 
 /*
