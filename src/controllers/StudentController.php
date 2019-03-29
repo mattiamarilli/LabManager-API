@@ -4,8 +4,9 @@
  * 29/03/19
  */
 
-class AdminController {
+class StudenteController {
 
+    // GET /admin/studente
     static function getStudenti($req, $res, $service, $app){
 
         $stm = $app->db->prepare('SELECT id_studente, studente.nome, cognome, username, classe.id_classe, classe.nome AS classe, id_gruppo FROM studente INNER JOIN classe ON classe.id_classe = studente.id_classe');
@@ -25,6 +26,13 @@ class AdminController {
         }, $dbres);
 
         $res->json($data);
+
+    }
+
+    // POST /admin/studente
+    static function addStudente($req, $res, $service, $app){
+        
+        $res->json([]);
 
     }
 
