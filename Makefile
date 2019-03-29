@@ -24,10 +24,6 @@ devbuild:
 devdown:
 	$(DEVDCOMPOSE) down
 
-.PHONY: devbuild
-devbuild:
-	$(DEVCOMPOSE) build
-
 .PHONY: devclear
 devclear:
 	$(DEVCOMPOSE) rm

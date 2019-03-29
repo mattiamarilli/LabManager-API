@@ -1,9 +1,9 @@
 USE labmanager;
 
-INSERT INTO classe (nome, anno, scadenza) VALUES
-('dummyclass1', 2019, NOW()),
-('dummyclass2', 2019, NOW()),
-('dummyclass3', 2019, NOW());
+INSERT INTO classe (nome, anno) VALUES
+('dummyclass1', 2019),
+('dummyclass2', 2019),
+('dummyclass3', 2019);
 
 INSERT INTO studente (nome,cognome, password, username, id_classe) VALUES
 
