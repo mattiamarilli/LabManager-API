@@ -15,7 +15,8 @@ services:
 
   php:
     container_name: lm-php
-    image: php:7-fpm-alpine
+    build:
+      context: ./php
     volumes:
       - ../src:/src
     links:

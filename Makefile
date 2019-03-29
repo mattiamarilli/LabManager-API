@@ -16,6 +16,10 @@ down:
 devup:
 	$(DEVCOMPOSE) up
 
+.PHONY: devbuild
+devbuild:
+	$(DEVCOMPOSE) build
+
 .PHONY: devdown
 devdown:
 	$(DEVDCOMPOSE) down

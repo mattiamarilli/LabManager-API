@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 foreach (glob("controllers/*Controller.php") as $filename)
@@ -21,6 +22,8 @@ $klein->respond(function ($request, $response, $service, $app) {
  ***************/
 
 $klein->respond('GET', '/', ['IndexController', 'get']);
+
+$klein->respond('GET', '/admin/studente', ['AdminController', 'getStudenti']);
 
 
 
