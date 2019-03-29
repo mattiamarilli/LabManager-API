@@ -1,0 +1,17 @@
+{
+    "name": "vivedo/lab-manager-api",
+    "type": "project",
+    "license": "private",
+    "authors": [
+        {
+            "name": "vivedo",
+            "email": "edoardo.viviani@gmail.com"
+        }
+    ],
+    "require": {
+        "klein/klein": "^2.1"
+    },
+    "config": {
+        "vendor-dir": "src/vendor"
+    }
+}

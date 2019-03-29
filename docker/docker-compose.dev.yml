@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  phpMyAdmin:
+    container_name: lm-pma
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: database
+      PMA_USER: labmanager
+      PMA_PASSWORD: labmanager
+    links:
+      - mariadb:database
+    ports:
+      - 8000:80

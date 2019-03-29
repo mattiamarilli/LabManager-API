@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  web:
+    container_name: lm-web
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ../src:/src
+      - ../site.conf:/etc/nginx/conf.d/default.conf:ro
+    links:
+      - php
+
+
+  php:
+    container_name: lm-php
+    image: php:7-fpm-alpine
+    volumes:
+      - ../src:/src
+    links:
+      - mariadb:database
+
+  composer:
+    container_name: lm-cmp
+    restart: 'no'
+    image: composer/composer:php7
+    command: install
+    volumes:
+      - ..:/app
+
+  mariadb:
+    container_name: lm-mdb
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: labmanager
+      MYSQL_DATABASE: labmanager
+      MYSQL_USER: labmanager
+      MYSQL_PASSWORD: labmanager
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../sql:/sql
+
+volumes:
+  database-data:
