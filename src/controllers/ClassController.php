@@ -26,7 +26,14 @@ class ClassController {
 
     // POST /admin/classe
     static function addClass($req, $res, $service, $app){	
-		$res->json([]);
+		$parameters = $req->paramPost();
+		$stm = $app->db->prepare('INSERT INTO classe (nome, anno, abilita) VALUES ($parameters['nome'], $parameters['anno_scolastico'], false)');		
+        if($stm->execute()){
+			$res->json_encode(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json_encode(["message" => "Classe non aggiunta", "code" => 500 ]);
+		}
     }
 	
 	//POST /admin/classe/enable
