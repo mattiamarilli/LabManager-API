@@ -30,10 +30,21 @@ class StudentController {
     }
 
     // POST /admin/studente
-    static function addStudent($req, $res, $service, $app){
-
-        $res->json([]);
-
+    static function addStudent($req, $res, $service, $app){	
+		$parameters = $req->paramPost();
+		$username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
+		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password) VALUES ($parameters['nome'], $parameters['cognome'], $parameters['id_classe'], username, generateRandomPassword())');		
+        if($stm->execute()){
+			$res->json_encode(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json_encode(["message" => "Studente non aggiunto", "code" => 500 ]);
+		}
     }
+	
+	//Genera stringa alfanumerica random
+	function generateRandomPassword($length = 10) {
+		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+	}
 
 }
