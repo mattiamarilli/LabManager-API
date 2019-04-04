@@ -27,7 +27,9 @@ class ClassController {
     // POST /admin/classe
     static function addClass($req, $res, $service, $app){	
 		$parameters = $req->paramPost();
-		$stm = $app->db->prepare('INSERT INTO classe (nome, anno, abilita) VALUES ($parameters['nome'], $parameters['anno_scolastico'], false)');		
+		$stm = $app->db->prepare('INSERT INTO classe (nome, anno, abilita) VALUES (:nome, :anno_scolastico, false)');	
+		$stm->bindValue(":nome", $parameters['nome']);
+		$stm->bindValue(":anno_scolastico", $parameters['anno_scolastico']);
         if($stm->execute()){
 			$res->json_encode(["message" => "OK", "code" => 200 ]);
 		}
@@ -38,7 +40,17 @@ class ClassController {
 	
 	//POST /admin/classe/enable
 	static function activateClass($req, $res, $service, $app){
-		$res->json([]);
+		$parameters = $req->paramPost();
+		$stm = $app->db->prepare('UPDATE classe SET abilita = true WHERE id_classe = :id_classe');	
+		$stm->bindValue(":id_classe", $paramaters['id_classe']);
+		$stm->execute();
+		if($stm->rowCount() > 0)
+		{
+			$res->json_encode(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json_encode(["message" => "Classe non attivata", "code" => 500 ]);
+		}
 	}
 	//DELETE /admin/classe/enable
 	static function disableClass($req, $res, $service, $app){

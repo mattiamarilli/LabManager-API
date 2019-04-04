@@ -33,7 +33,10 @@ class StudentController {
     static function addStudent($req, $res, $service, $app){	
 		$parameters = $req->paramPost();
 		$username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
-		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password) VALUES ($parameters['nome'], $parameters['cognome'], $parameters['id_classe'], username, generateRandomPassword())');		
+		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password) VALUES (:nome, :cognome, :id_classe, username, generateRandomPassword())');	
+		$stm->bindValue(":nome", $parameters['nome']);
+		$stm->bindValue(":cognome", $parameters['cognome']);
+		$stm->bindValue(":id_classe", $parameters['id_classe']);		
         if($stm->execute()){
 			$res->json_encode(["message" => "OK", "code" => 200 ]);
 		}
