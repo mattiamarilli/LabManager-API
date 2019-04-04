@@ -54,6 +54,16 @@ class ClassController {
 	}
 	//DELETE /admin/classe/enable
 	static function disableClass($req, $res, $service, $app){
-		$res->json([]);
+		$parameters = $req->paramPost();
+		$stm = $app->db->prepare('UPDATE classe SET abilita = false WHERE id_classe = :id_classe');	
+		$stm->bindValue(":id_classe", $paramaters['id_classe']);
+		$stm->execute();
+		if($stm->rowCount() > 0)
+		{
+			$res->json_encode(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json_encode(["message" => "Classe non disabilitata", "code" => 500 ]);
+		}
 	}
 }
