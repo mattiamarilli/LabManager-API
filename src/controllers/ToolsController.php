@@ -33,6 +33,21 @@ class ToolsController{
 			$res->json(["message" => "Utensile non aggiunto", "code" => 500 ]);
 		}
     }
+    
+    //DELETE /admin/utensile
+    static function removeTool($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('DELETE FROM utensile WHERE id_utensile=:id');
+			$stm->bindValue(":id", $paramaters['id']);
+	    if($stm->execute()){
+				$res->json(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json(["message" => "Utensile non rimosso", "code" => 500 ]);
+		}
+    }
+    
 
     //GET /admin/categoria
     static function getCategories($req, $res, $service, $app){
