@@ -18,6 +18,21 @@ class ToolsController{
 
         $res->json($data);
     }
+    
+     //POST /admin/utensile
+    static function addTool($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('INSERT INTO utensile (nome, id_categoria, segnala) VALUES (:nome, :id_categoria, false)');
+			$stm->bindValue(":nome", $paramaters['nome']);
+			$stm->bindValue(":id_categoria", $paramaters['id_categoria']);
+	    if($stm->execute()){
+				$res->json(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json(["message" => "Utensile non aggiunto", "code" => 500 ]);
+		}
+    }
 
     //GET /admin/categoria
     static function getCategories($req, $res, $service, $app){

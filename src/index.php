@@ -35,6 +35,9 @@ $klein->respond('DELETE', '/admin/classe', ['ClassController', 'deleteClass']);
 $klein->respond('POST', '/admin/classe/enable', ['ClassController', 'activateClass']);
 $klein->respond('DELETE', '/admin/classe/enable', ['ClassController', 'disableClass']);
 
+$klein->respond('GET', '/admin/utensile', ['ToolsController', 'getTools']);
+$klein->respond('GET', '/admin/categoria', ['ToolsController', 'getCategories']);
+$klein->respond('POST', '/admin/utensile', ['ToolsController', 'addTool']);
 
 // User
 
