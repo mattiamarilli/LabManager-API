@@ -30,6 +30,10 @@ $klein->respond('POST', '/admin/studente', ['StudentController', 'addStudent']);
 
 $klein->respond('GET', '/admin/classe', ['ClassController', 'getClasses']);
 $klein->respond('POST', '/admin/classe', ['ClassController', 'addClass']);
+$klein->respond('PUT', '/admin/classe', ['ClassController', 'modifyClass']);
+$klein->respond('DELETE', '/admin/classe', ['ClassController', 'deleteClass']);
+$klein->respond('POST', '/admin/classe/enable', ['ClassController', 'activateClass']);
+$klein->respond('DELETE', '/admin/classe/enable', ['ClassController', 'disableClass']);
 
 
 // User

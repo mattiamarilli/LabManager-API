@@ -72,4 +72,12 @@ class ClassController {
 			$res->json(["message" => "Classe non disabilitata", "code" => 500 ]);
 		}
 	}
+
+  static function modifyClass($req, $res, $service, $app){
+		// Nome - anno_scolastico
+  }
+
+	static function deleteClass($req, $res, $service, $app){
+		//id_classes
+  }
 }
