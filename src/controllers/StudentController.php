@@ -30,24 +30,41 @@ class StudentController {
     }
 
     // POST /admin/studente
-    static function addStudent($req, $res, $service, $app){	
-		$parameters = $req->paramPost();
-		$username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
-		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password) VALUES (:nome, :cognome, :id_classe, username, generateRandomPassword())');	
+    static function addStudent($req, $res, $service, $app){
+        $parameters = $req->body();
+        $parameters = json_decode($parameters, true);
+        $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
+		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password, id_gruppo) VALUES (:nome, :cognome, :id_classe, username, generateRandomPassword(), null)');
 		$stm->bindValue(":nome", $parameters['nome']);
 		$stm->bindValue(":cognome", $parameters['cognome']);
-		$stm->bindValue(":id_classe", $parameters['id_classe']);		
+		$stm->bindValue(":id_classe", $parameters['id_classe']);
         if($stm->execute()){
-			$res->json_encode(["message" => "OK", "code" => 200 ]);
+			$res->json(["message" => "OK", "code" => 200 ]);
 		}
 		else{
-			$res->json_encode(["message" => "Studente non aggiunto", "code" => 500 ]);
+			$res->json(["message" => "Studente non aggiunto", "code" => 500 ]);
 		}
     }
-	
+
 	//Genera stringa alfanumerica random
 	function generateRandomPassword($length = 10) {
 		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 	}
+
+    static function modifyStudent($req, $res, $service, $app){
+        $parameters = $req->body();
+        $parameters = json_decode($parameters, true);
+        $stm = $app->db->prepare('UPDATE studente SET nome = :nome, cognome = :cognome, id_classe = :id_classe WHERE id_studente = :id_studente');
+		$stm->bindValue(":nome", $parameters['nome']);
+		$stm->bindValue(":cognome", $parameters['cognome']);
+		$stm->bindValue(":id_classe", $parameters['id_classe']);
+		$stm->bindValue(":id_studente", $parameters['id_studente']);
+		$stm->execute();
+        if($stm->rowCount() > 0){
+            $res->json(["message" => "OK", "code" => 200 ]);
+        }else{
+            $res->json(["message" => "Studente non modificata", "code" => 500 ]);
+        }
+    }
 
 }

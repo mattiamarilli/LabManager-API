@@ -23,11 +23,12 @@ $klein->respond(function ($request, $response, $service, $app) {
 
 $klein->respond('GET', '/', ['IndexController', 'get']);
 
-// Admin
-
+//Studente
 $klein->respond('GET', '/admin/studente', ['StudentController', 'getStudents']);
 $klein->respond('POST', '/admin/studente', ['StudentController', 'addStudent']);
+$klein->respond('PUT', '/admin/studente', ['StudentController', 'modifyStudent']);
 
+//Classe
 $klein->respond('GET', '/admin/classe', ['ClassController', 'getClasses']);
 $klein->respond('POST', '/admin/classe', ['ClassController', 'addClass']);
 $klein->respond('PUT', '/admin/classe', ['ClassController', 'modifyClass']);
