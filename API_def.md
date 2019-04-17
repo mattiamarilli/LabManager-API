@@ -148,7 +148,7 @@ BODY
 
 ## Utensili
 
-#### GET /admin/utensile
+#### :heavy_check_mark: GET /admin/utensile
 > Ottiene gli utensili
 
 RESPONSE
@@ -165,7 +165,7 @@ RESPONSE
 ]
 ```
 
-#### POST /admin/utensile
+#### :heavy_check_mark: POST /admin/utensile
 > Aggiunge un utensile
 
 BODY
@@ -177,7 +177,7 @@ BODY
 }
 ```
 
-#### DELETE /admin/utensile
+#### :heavy_check_mark: DELETE /admin/utensile
 > Aggiunge un utensile
 
 BODY
@@ -187,7 +187,7 @@ BODY
 }
 ```
 
-#### DELETE /admin/utensile/segnalazione
+#### :heavy_check_mark: DELETE /admin/utensile/segnalazione
 > Aggiunge un utensile
 
 BODY
@@ -197,7 +197,7 @@ BODY
 }
 ```
 
-#### GET /admin/categoria
+#### :heavy_check_mark: GET /admin/categoria
 > Ottiene le categorie
 
 RESPONSE
@@ -211,7 +211,7 @@ RESPONSE
 ]
 ```
 
-#### POST /admin/categoria
+#### :heavy_check_mark: POST /admin/categoria
 > Aggiunge una categoria
 
 RESPONSE
