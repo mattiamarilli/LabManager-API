@@ -74,10 +74,30 @@ class ClassController {
 	}
 
   static function modifyClass($req, $res, $service, $app){
-		// Nome - anno_scolastico
+		$paramaters = $req->body();
+		$paramaters = json_decode($paramaters, true);
+		$stm = $app->db->prepare('UPDATE classe SET nome = :nome, anno = :anno_scolastico WHERE id_classe = :id_classe');
+		$stm->bindValue(":nome", $paramaters['nome']);
+		$stm->bindValue(":anno_scolastico", $paramaters['anno_scolastico']);
+		$stm->bindValue(":id_classe", $paramaters['id_classe']);
+		$stm->execute();
+		if($stm->rowCount() > 0){
+			$res->json(["message" => "OK", "code" => 200 ]);
+		}else{
+			$res->json(["message" => "Classe non modificata", "code" => 500 ]);
+		}
   }
 
 	static function deleteClass($req, $res, $service, $app){
-		//id_classes
+		$paramaters = $req->body();
+		$paramaters = json_decode($paramaters, true);
+		$stm = $app->db->prepare('DELETE FROM classe WHERE id_classe=:id_classe');
+		$stm->bindValue(":id_classe", $paramaters['id_classe']);
+		$stm->execute();
+		if($stm->rowCount() > 0){
+			$res->json(["message" => "OK", "code" => 200 ]);
+		}else{
+			$res->json(["message" => "Classe non modificata", "code" => 500 ]);
+		}
   }
 }
