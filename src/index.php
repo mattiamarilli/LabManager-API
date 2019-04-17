@@ -40,7 +40,7 @@ $klein->respond('GET', '/admin/categoria', ['ToolsController', 'getCategories'])
 $klein->respond('POST', '/admin/utensile', ['ToolsController', 'addTool']);
 $klein->respond('DELETE', '/admin/utensile', ['ToolsController', 'removeTool']);
 $klein->respond('DELETE', '/admin/utensile/segnalazione', ['ToolsController', 'removeAlertTool']);
-$klein->respond('POST', '/admin/categoria', ['ToolsController', 'addCatogory']);
+$klein->respond('POST', '/admin/categoria', ['ToolsController', 'addCategory']);
 
 // User
 
