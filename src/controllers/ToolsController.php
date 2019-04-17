@@ -48,6 +48,20 @@ class ToolsController{
 		}
     }
     
+    //DELETE /admin/utensile/segnalazione
+    static function removeAlertTool($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('UPDATE utensile SET segnala=false WHERE id_utensile=:id');
+			$stm->bindValue(":id", $paramaters['id']);
+	    if($stm->execute()){
+				$res->json(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json(["message" => "Seganlazione non rimossa", "code" => 500 ]);
+		}
+    }
+    
 
     //GET /admin/categoria
     static function getCategories($req, $res, $service, $app){
