@@ -36,6 +36,68 @@ RESPONSE (200)
 }
 ```
 
+## Docenti
+
+#### GET /admin/docente
+> Ottiene i docenti
+
+RESPONSE
+```ts
+[
+    {
+        id_docente: number,
+        nome: string,
+        admin: boolean
+    },
+    ...
+]
+```
+
+#### POST /admin/docente
+> Crea un docente
+
+BODY
+```ts
+[
+    {
+        nome: string,
+        admin: boolean
+    },
+    ...
+]
+```
+
+#### PUT /admin/docente
+> Modifica un docente
+
+BODY
+```ts
+[
+    {
+        id_docente: number,
+        nome: string,
+        admin: boolean
+    },
+    ...
+]
+```
+
+#### DELETE /admin/docente
+> Elimina un docente
+
+BODY
+```ts
+[
+    {
+        id_docente: number,
+    },
+    ...
+]
+```
+
+
+
+
 ## Classi
 
 #### :heavy_check_mark: GET /admin/classe
