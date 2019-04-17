@@ -78,6 +78,20 @@ class ToolsController{
 
         $res->json($data);
     }
+    
+    //POST /admin/categoria
+    static function addCategory($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('INSERT INTO categoria (nome) VALUES (:nome)');
+			$stm->bindValue(":nome", $paramaters['nome']);
+	    if($stm->execute()){
+				$res->json(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json(["message" => "Categoria non aggiunta", "code" => 500 ]);
+		}
+    }
 
 }
 
