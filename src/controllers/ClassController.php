@@ -46,7 +46,7 @@ class ClassController {
 		$parameters = $req->body();
 		$paramaters = json_decode($parameters, true);
 		$stm = $app->db->prepare('UPDATE classe SET abilita = true WHERE id_classe = :id_classe');
-		$stm->bindValue(":id_classe", $paramaters);
+		$stm->bindValue(":id_classe", $paramaters['id_classe']);
 		$stm->execute();
 		if($stm->rowCount() > 0)
 		{
