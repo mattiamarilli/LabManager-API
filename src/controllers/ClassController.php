@@ -16,8 +16,8 @@ class ClassController {
             return [
                 'id_classe' => +$entry['id_classe'],
                 'nome' => $entry['nome'],
-                'anno_scolastico' => $entry['anno'],
-                'enabled' => $entry['abilita'],
+                'anno_scolastico' => +$entry['anno'],
+                'enabled' => !!$entry['abilita'],
             ];
         }, $dbres);
 
