@@ -30,6 +30,7 @@ $klein->respond('GET', '/', ['IndexController', 'get']);
 $klein->respond('GET', '/admin/studente', ['StudentController', 'getStudents']);
 $klein->respond('POST', '/admin/studente', ['StudentController', 'addStudent']);
 $klein->respond('PUT', '/admin/studente', ['StudentController', 'modifyStudent']);
+$klein->respond('DELETE', '/admin/studente', ['StudentController', 'deleteStudent']);
 
 //Classe
 $klein->respond('GET', '/admin/classe', ['ClassController', 'getClasses']);

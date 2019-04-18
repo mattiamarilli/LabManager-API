@@ -97,7 +97,7 @@ class ClassController {
 		if($stm->rowCount() > 0){
 			$res->json(["message" => "OK", "code" => 200 ]);
 		}else{
-			$res->json(["message" => "Classe non modificata", "code" => 500 ]);
+			$res->json(["message" => "Classe non eliminata", "code" => 500 ]);
 		}
   }
 }

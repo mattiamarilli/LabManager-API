@@ -24,7 +24,6 @@ class StudentController {
                 'classe' => $entry['classe']
             ];
         }, $dbres);
-
         $res->json($data);
 
     }
@@ -33,11 +32,14 @@ class StudentController {
     static function addStudent($req, $res, $service, $app){
         $parameters = $req->body();
         $parameters = json_decode($parameters, true);
+        $password = self::generateRandomPassword();
         $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
-		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password, id_gruppo) VALUES (:nome, :cognome, :id_classe, username, generateRandomPassword(), null)');
+		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password, id_gruppo) VALUES (:nome, :cognome, :id_classe, :username, :password, null)');
 		$stm->bindValue(":nome", $parameters['nome']);
 		$stm->bindValue(":cognome", $parameters['cognome']);
 		$stm->bindValue(":id_classe", $parameters['id_classe']);
+		$stm->bindValue(":username", $username);
+		$stm->bindValue(":password", $password);
         if($stm->execute()){
 			$res->json(["message" => "OK", "code" => 200 ]);
 		}
@@ -67,4 +69,16 @@ class StudentController {
         }
     }
 
+    static function deleteStudent($req, $res, $service, $app){
+        $parameters = $req->body();
+		$parameters = json_decode($parameters, true);
+		$stm = $app->db->prepare('DELETE FROM studente WHERE id_studente=:id_studente');
+		$stm->bindValue(":id_studente", $parameters['id_studente']);
+		$stm->execute();
+		if($stm->rowCount() > 0){
+			$res->json(["message" => "OK", "code" => 200 ]);
+		}else{
+			$res->json(["message" => "Studente non eliminato", "code" => 500 ]);
+		}
+    }
 }
