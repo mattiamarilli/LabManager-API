@@ -40,12 +40,20 @@ $klein->respond('DELETE', '/admin/classe', ['ClassController', 'deleteClass']);
 $klein->respond('POST', '/admin/classe/enable', ['ClassController', 'activateClass']);
 $klein->respond('DELETE', '/admin/classe/enable', ['ClassController', 'disableClass']);
 
+//Utensili
 $klein->respond('GET', '/admin/utensile', ['ToolsController', 'getTools']);
 $klein->respond('GET', '/admin/categoria', ['ToolsController', 'getCategories']);
 $klein->respond('POST', '/admin/utensile', ['ToolsController', 'addTool']);
 $klein->respond('DELETE', '/admin/utensile', ['ToolsController', 'removeTool']);
 $klein->respond('DELETE', '/admin/utensile/segnalazione', ['ToolsController', 'removeAlertTool']);
 $klein->respond('POST', '/admin/categoria', ['ToolsController', 'addCategory']);
+
+//Docente
+$klein->respond('GET', '/admin/docente', ['TeacherController', 'getTeachers']);
+$klein->respond('POST', '/admin/docente', ['TeacherController', 'addTeacher']);
+$klein->respond('PUT', '/admin/docente', ['TeacherController', 'modifyTeacher']);
+$klein->respond('DELETE', '/admin/docente', ['TeacherController', 'deleteTeacher']);
+
 
 // User
 
