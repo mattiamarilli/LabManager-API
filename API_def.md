@@ -208,6 +208,29 @@ BODY
 }
 ```
 
+#### :heavy_check_mark: PUT /admin/studente
+> Modifica uno studente
+
+BODY
+```ts
+{
+    nome: string,
+    cognome: string,
+    id_classe: number
+    id_studente: number
+}
+```
+
+#### :heavy_check_mark: DELETE /admin/studente
+> Elimina uno studente
+
+BODY
+```ts
+{
+    id_studente: number
+}
+```
+
 ## Utensili
 
 #### :heavy_check_mark: GET /admin/utensile
@@ -319,8 +342,15 @@ BODY
 }
 ```
 
-#### DELETE /user/gruppo
+#### :heavy_check_mark: DELETE /user/gruppo
 > Lascia il gruppo
+
+BODY
+```ts
+{
+    id_studente: number
+}
+```
 
 #### GET /user/gruppo
 > Ottiene i compagni nel gruppo
