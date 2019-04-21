@@ -38,7 +38,7 @@ RESPONSE (200)
 
 ## Docenti
 
-#### GET /admin/docente
+#### :heavy_check_mark: GET /admin/docente
 > Ottiene i docenti
 
 RESPONSE
@@ -53,7 +53,7 @@ RESPONSE
 ]
 ```
 
-#### POST /admin/docente
+#### :heavy_check_mark: POST /admin/docente
 > Crea un docente
 
 BODY
@@ -67,7 +67,7 @@ BODY
 ]
 ```
 
-#### PUT /admin/docente
+#### :heavy_check_mark: PUT /admin/docente
 > Modifica un docente
 
 BODY
@@ -82,7 +82,7 @@ BODY
 ]
 ```
 
-#### DELETE /admin/docente
+#### :heavy_check_mark: DELETE /admin/docente
 > Elimina un docente
 
 BODY
