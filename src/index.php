@@ -59,7 +59,7 @@ $klein->respond('DELETE', '/admin/docente', ['TeacherController', 'deleteTeacher
 
 $klein->respond('POST', '/user/gruppo', ['GroupController', 'joinGroup']);
 $klein->respond('DELETE', '/user/gruppo', ['GroupController', 'leaveGroup']);
-
+$klein->respond('GET', '/user/gruppo', ['GroupController', 'getGroupMembers']);
 
 /*
  * UTILS

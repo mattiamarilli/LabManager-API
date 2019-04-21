@@ -65,7 +65,7 @@ class StudentController {
         if($stm->rowCount() > 0){
             $res->json(["message" => "OK", "code" => 200 ]);
         }else{
-            $res->json(["message" => "Studente non modificata", "code" => 500 ]);
+            $res->json(["message" => "Studente non modificato", "code" => 500 ]);
         }
     }
 
