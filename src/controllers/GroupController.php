@@ -39,8 +39,22 @@ class GroupController {
 
 	// GET /user/gruppo
     static function getGroupMembers($req, $res, $service, $app){
-
-        $res->json([]);
+        $url = $req->uri();
+        $query_str = parse_url($url, PHP_URL_QUERY);
+        parse_str($query_str, $query_params);
+        //print_r($query_params);
+        $stm = $app->db->prepare('SELECT id_studente, nome, cognome from studente where id_studente = :id_studente');
+		$stm->bindValue(":id_studente", $query_params['id_studente']);
+		$stm->execute();
+        $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $data = array_map(function($entry){
+            return [
+                'id_studente' => $entry['id_studente'],
+                'nome' => $entry['nome'],
+                'cognome' => $entry['cognome'],
+            ];
+        }, $dbres);
+        $res->json($data);
     }
 
 }
