@@ -332,13 +332,14 @@ RESPONSE (200)
 
 ## Gruppi
 
-#### POST /user/gruppo
+#### :heavy_check_mark: POST /user/gruppo
 > Entra nel gruppo con studente *id_studente*
 
 BODY
 ```ts
 {
     id_studente: number
+    id_gruppo: number
 }
 ```
 
@@ -352,7 +353,7 @@ BODY
 }
 ```
 
-#### GET /user/gruppo
+#### :heavy_check_mark: GET /user/gruppo
 > Ottiene i compagni nel gruppo
 
 RESPONSE
