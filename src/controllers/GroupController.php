@@ -43,8 +43,8 @@ class GroupController {
         $query_str = parse_url($url, PHP_URL_QUERY);
         parse_str($query_str, $query_params);
         //print_r($query_params);
-        $stm = $app->db->prepare('SELECT id_studente, nome, cognome from studente where id_studente = :id_studente');
-		$stm->bindValue(":id_studente", $query_params['id_studente']);
+        $stm = $app->db->prepare('SELECT id_studente, nome, cognome from studente where id_gruppo = :id_gruppo');
+		$stm->bindValue(":id_gruppo", $query_params['id_gruppo']);
 		$stm->execute();
         $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
         $data = array_map(function($entry){
