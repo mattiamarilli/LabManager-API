@@ -22,7 +22,7 @@ class AuthController {
               'cognome' => $entry['cognome'],
               'id_gruppo' => $entry['id_gruppo'] ? +$entry['id_gruppo'] : null,
               'id_classe' => +$entry['id_classe'],
-              'classe' => $entry['classe']
+              'classe' => $entry['nome']
           ];
       }, $dbres);
       $res->json($data);
