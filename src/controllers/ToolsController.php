@@ -34,6 +34,22 @@ class ToolsController{
 		}
     }
 
+	//PUT /admin/utensile
+    static function modifyTool($req, $res, $service, $app){
+			$parameters = $req->body();
+			$parameters = json_decode($parameters, true);
+      $stm = $app->db->prepare('UPDATE utensile SET nome = :nome, id_categoria = :id_categoria WHERE id_utensile = :id_utensile');
+      $stm->bindValue(":nome", $parameters['nome']);
+      $stm->bindValue(":id_categoria", $parameters['id_categoria']);
+      $stm->bindValue(":id_utensile", $parameters['id_utensile']);
+      $stm->execute();
+      if($stm->rowCount() > 0){
+          $res->json(["message" => "OK", "code" => 200 ]);
+      }else{
+          $res->json(["message" => "Utensile non modificato", "code" => 500 ]);
+      }
+    }
+
     //DELETE /admin/utensile
     static function removeTool($req, $res, $service, $app){
 			$parameters = $req->body();
