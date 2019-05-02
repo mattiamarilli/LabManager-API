@@ -35,7 +35,7 @@ class GroupController {
 
             $stm = $app->db->prepare('UPDATE studente SET id_gruppo=:id_gruppo WHERE id_studente IN (:id1, :id2)');
             $stm->bindValue(":id_gruppo", $idGruppo);
-            $stm->bindValue(":id1", $user['id_utente']);   // current user
+            $stm->bindValue(":id1", $user['id_studente']);   // current user
             $stm->bindValue(":id2", $parameters['id_studente']);// other user
             $stm->execute();
 
