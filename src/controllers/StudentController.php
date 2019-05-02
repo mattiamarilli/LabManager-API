@@ -83,10 +83,16 @@ class StudentController {
     }
 
     static function getMates($req, $res, $service, $app) {
-        $idClasse = $_SESSION['user']['id_classe'];
+        $token = $req->headers()['token'];
+        $data = parseJwt($token);
+        $stm = $app->db->prepare('SELECT id_studente, nome, cognome, id_classe, id_gruppo FROM studente WHERE id_studente = :id');
+		$stm->bindValue(":id", $data['id']);
+		$stm->execute();
+        $user = $stm->fetch(PDO::FETCH_ASSOC);
+
 
         $stm = $app->db->prepare('SELECT id_studente, nome, cognome FROM studente WHERE id_classe = :classe');
-		$stm->bindValue(":classe", $idClasse);
+		$stm->bindValue(":classe", $user['id_classe']);
 		$stm->execute();
 		$res->json($stm->fetchAll(PDO::FETCH_ASSOC));
     }

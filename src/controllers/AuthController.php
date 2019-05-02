@@ -30,7 +30,7 @@ class AuthController {
                 'id_gruppo' => $entry['id_gruppo'] ? +$entry['id_gruppo'] : null,
                 'id_classe' => +$entry['id_classe'],
                 'classe' => $entry['nome_classe'],
-                'token' => getJwt(['id' => +$entry['id_studente']], "i-am-inevitable/and-i-am-iron-man")
+                'token' => getJwt(['id' => +$entry['id_studente']])
             ];
         }, $dbres);
         $res->json($data[0]);

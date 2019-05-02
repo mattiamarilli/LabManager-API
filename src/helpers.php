@@ -1,6 +1,11 @@
 <?php
 
+$secret = "i-am-inevitable/and-i-am-iron-man";
+
 function getJwt($fields = array(), $secretkey = NULL) {
+
+    if(!$secretkey)
+        $secretkey = $secret;
  
     $encoded_header = base64_encode('{"alg": "HS256","typ": "JWT"}');
 
@@ -18,7 +23,10 @@ function getJwt($fields = array(), $secretkey = NULL) {
 
 function checkJwt($token = NULL, $secretkey = NULL) {
 
-    $jwt_values = explode('.', $token);
+    if(!$secretkey)
+        $secretkey = $secret;
+
+    $jwt_values = explode('.', $token); 
 
     $recieved_signature = $jwt_values[2];
 
@@ -29,4 +37,22 @@ function checkJwt($token = NULL, $secretkey = NULL) {
     if ($resultedsignature == $recieved_signature) return(true);
     else return(false);
 
+}
+
+function parseJwt($token = NULL, $secretkey = NULL) {
+
+    if(!$secretkey)
+    $secretkey = $secret;
+
+    if(true || checkJwt($token, $secretkey))
+        return json_decode(base64_decode(explode('.', $token)[1]), true);
+    else 
+        return false;
+}
+
+function getUser($db, $id){
+    $stm = $db->prepare('SELECT id_studente, nome, cognome, id_classe, id_gruppo FROM studente WHERE id_studente = :id');
+    $stm->bindValue(":id", $id);
+    $stm->execute();
+    return $stm->fetch(PDO::FETCH_ASSOC);
 }
