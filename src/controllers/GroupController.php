@@ -49,11 +49,8 @@ class GroupController {
         $stm = $app->db->prepare('UPDATE studente SET id_gruppo = NULL WHERE id_studente = :id_studente');
 		$stm->bindValue(":id_studente", $parameters['id_studente']);
 		$stm->execute();
-        if($stm->rowCount() > 0){
-            $res->json(["message" => "OK", "code" => 200 ]);
-        }else{
-            $res->json(["message" => "Gruppo non lasciato", "code" => 500 ]);
-        }
+
+        $res->json(["message" => "OK", "code" => 200 ]);
     }
 
 	// GET /user/gruppo
