@@ -112,8 +112,11 @@ class ToolsController{
 
     }
 
-    // DELETE /user/utensile
+    // POST /user/utensile/release
     static function releaseTool($req, $res, $service, $app) {
+
+      $parameters = $req->body();
+		  $parameters = json_decode($parameters, true);
 
       $token = $req->headers()['token'];
       $data = parseJwt($token);
@@ -124,7 +127,7 @@ class ToolsController{
 
       $stm = $app->db->prepare('UPDATE evento SET fine = NOW() WHERE id_evento = (SELECT id_evento FROM evento INNER JOIN studente_evento ON studente_evento.id_evento = evento.id_evento AND studente_evento.id_studente = :studente AND evento.fine IS NULL AND evento.id_utensile = :utensile)');
       $stm->bindValue(":studente", $user['id_studente']);
-      $stm->bindValue(":utensile", +$req->headers()['id_utensile']);
+      $stm->bindValue(":utensile", $parameters['id_utensile']);
       $stm->execute();
 
       $res->json($stm->fetchAll(PDO::FETCH_ASSOC));
