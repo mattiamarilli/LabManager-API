@@ -174,8 +174,8 @@ class ToolsController{
         die();
       }
 
-      $stm = $app->db->prepare('INSERT INTO evento (id_utensile) SELECT id_utensile FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_categoria = 2 LIMIT 1');
-      $stm->bindValue(":id", $parameters['id_utensile']);
+      $stm = $app->db->prepare('INSERT INTO evento (id_utensile) SELECT id_utensile FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_categoria = :id LIMIT 1');
+      $stm->bindValue(":id", $parameters['id_categoria']);
       $stm->execute();
       $idEvento = $app->db->lastInsertId();
 
