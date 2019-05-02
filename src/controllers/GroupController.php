@@ -10,17 +10,26 @@ class GroupController {
     static function joinGroup($req, $res, $service, $app){
 		    $parameters = $req->body();
             $parameters = json_decode($parameters, true);
-            $stm = $app->db->prepare('UPDATE studente SET id_gruppo=:id_gruppo WHERE id_studente = :id_studente');
-            $stm->bindValue(":id_gruppo", $parameters['id_gruppo']);
+
+            $stm = $app->db->prepare('SELECT id_gruppo FROM studente WHERE id_studente = :id_studente');
             $stm->bindValue(":id_studente", $parameters['id_studente']);
             $stm->execute();
-    		if($stm->rowCount() > 0)
-    		{
-    			$res->json(["message" => "OK", "code" => 200 ]);
-    		}
-    		else{
-    			$res->json(["message" => "Studente non aggiunto al gruppo", "code" => 500 ]);
-    		}
+            
+            $idGruppo = $stm->fetch(PDO::FETCH_ASSOC)['id_gruppo'];
+
+            if(!$idGruppo) {
+
+                $stm = $app->db->prepare('INSERT INTO gruppo () VALUES ()');
+                $stm->execute();
+                
+                $idGruppo = $stm->lastInsertId();
+            }
+
+
+            $stm = $app->db->prepare('UPDATE studente SET id_gruppo=:id_gruppo WHERE id_studente = :id_studente');
+            $stm->bindValue(":id_gruppo", $parameters['id_gruppo']);
+            $stm->bindValue(":id_studente", $_SESSION['user']['id']);
+            $stm->execute();
     }
 
     // DELETE /user/gruppo

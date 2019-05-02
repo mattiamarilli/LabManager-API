@@ -4,6 +4,8 @@
  * 29/03/19
  */
 
+ require_once __DIR__ . '/../helpers.php';
+
 class AuthController {
   static function studentLogin($req, $res, $service, $app){
     $parameters = $req->body();
@@ -27,7 +29,8 @@ class AuthController {
                 'cognome' => $entry['cognome'],
                 'id_gruppo' => $entry['id_gruppo'] ? +$entry['id_gruppo'] : null,
                 'id_classe' => +$entry['id_classe'],
-                'classe' => $entry['nome_classe']
+                'classe' => $entry['nome_classe'],
+                'token' => getJwt(['id' => +$entry['id_studente']], "i-am-inevitable/and-i-am-iron-man")
             ];
         }, $dbres);
         $res->json($data[0]);
