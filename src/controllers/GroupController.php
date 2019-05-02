@@ -25,10 +25,17 @@ class GroupController {
                 $idGruppo = $app->db->lastInsertId();
             }
 
+            $token = $req->headers()['token'];
+            $data = parseJwt($token);
+            $stm = $app->db->prepare('SELECT id_studente, nome, cognome, id_classe, id_gruppo FROM studente WHERE id_studente = :id');
+            $stm->bindValue(":id", $data['id']);
+            $stm->execute();
+            $user = $stm->fetch(PDO::FETCH_ASSOC);
+
 
             $stm = $app->db->prepare('UPDATE studente SET id_gruppo=:id_gruppo WHERE id_studente IN (:id1, :id2)');
             $stm->bindValue(":id_gruppo", $idGruppo);
-            $stm->bindValue(":id1", $_SESSION['user']['id']);   // current user
+            $stm->bindValue(":id1", $user['id_utente']);   // current user
             $stm->bindValue(":id2", $parameters['id_studente']);// other user
             $stm->execute();
 
