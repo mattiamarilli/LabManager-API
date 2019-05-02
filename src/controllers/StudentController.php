@@ -86,7 +86,7 @@ class StudentController {
         $token = $req->headers()['token'];
         $data = parseJwt($token);
         $stm = $app->db->prepare('SELECT id_studente, nome, cognome, id_classe, id_gruppo FROM studente WHERE id_studente = :id');
-		$stm->bindValue(":id",$ data['id']);
+		$stm->bindValue(":id", $data['id']);
 		$stm->execute();
         $user = $stm->fetch(PDO::FETCH_ASSOC);
 
