@@ -63,6 +63,7 @@ $klein->respond('DELETE', '/user/gruppo', ['GroupController', 'leaveGroup']);
 $klein->respond('GET', '/user/gruppo', ['GroupController', 'getGroupMembers']);
 
 $klein->respond('GET', '/user/utensile', ['ToolsController', 'getUserTools']);
+$klein->respond('DELETE', '/user/utensile', ['ToolsController', 'releaseTool']);
 
 //
 $klein->respond('POST', '/user/auth', ['AuthController', 'studentLogin']);
