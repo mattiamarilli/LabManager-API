@@ -158,6 +158,33 @@ class ToolsController{
       $stm->bindValue(":evento", $idEvento);
       $stm->bindValue(":studente", $user['id_studente']);
       $stm->execute();
+
+      $res->json(["message" => "OK", "code" => 200 ]);
+    }
+
+    static function getCategory($req, $res, $service, $app){
+      $parameters = $req->body();
+      $parameters = json_decode($parameters, true);
+
+      $stm = $app->db->prepare('SELECT COUNT(*) AS count FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_categoria = :id');
+      $stm->bindValue(":id", $parameters['id_categoria']);
+      $stm->execute();
+      if(+$stm->fetch(PDO::FETCH_ASSOC)['count'] == 0){
+        $res->json(["message" => "Utensile non disponibile", "code" => 400, "debug" =>  $parameters['id_utensile']]);
+        die();
+      }
+
+      $stm = $app->db->prepare('INSERT INTO evento (id_utensile) SELECT id_utensile FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_categoria = 2 LIMIT 1');
+      $stm->bindValue(":id", $parameters['id_utensile']);
+      $stm->execute();
+      $idEvento = $app->db->lastInsertId();
+
+      $stm = $app->db->prepare('INSERT INTO studente_evento (id_studente, id_evento) SELECT id_studente, :evento FROM studente WHERE id_gruppo = (SELECT id_gruppo FROM studente WHERE id_studente = :studente)');
+      $stm->bindValue(":evento", $idEvento);
+      $stm->bindValue(":studente", $user['id_studente']);
+      $stm->execute();
+
+      $res->json(["message" => "OK", "code" => 200 ]);
     }
 
 }
