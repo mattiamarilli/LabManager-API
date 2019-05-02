@@ -31,6 +31,8 @@ class GroupController {
             $stm->bindValue(":id1", $_SESSION['user']['id']);   // current user
             $stm->bindValue(":id2", $parameters['id_studente']);// other user
             $stm->execute();
+
+            $res->json(['id_gruppo' => $idGruppo])
     }
 
     // DELETE /user/gruppo
