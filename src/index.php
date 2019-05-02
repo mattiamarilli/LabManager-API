@@ -64,6 +64,10 @@ $klein->respond('GET', '/user/gruppo', ['GroupController', 'getGroupMembers']);
 
 //
 $klein->respond('POST', '/user/auth', ['AuthController', 'studentLogin']);
+$klein->respond('POST', '/user/renew', ['AuthController', 'studentRenew']);
+
+
+
 $klein->respond('POST', '/admin/auth', ['AuthController', 'teacherLogin']);
 
 $klein->respond('GET', '/user/compagno', ['StudentController', 'getMates']);
