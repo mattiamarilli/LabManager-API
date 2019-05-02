@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -56,7 +57,6 @@ $klein->respond('DELETE', '/admin/docente', ['TeacherController', 'deleteTeacher
 
 
 // User
-
 $klein->respond('POST', '/user/gruppo', ['GroupController', 'joinGroup']);
 $klein->respond('DELETE', '/user/gruppo', ['GroupController', 'leaveGroup']);
 $klein->respond('GET', '/user/gruppo', ['GroupController', 'getGroupMembers']);
@@ -64,6 +64,8 @@ $klein->respond('GET', '/user/gruppo', ['GroupController', 'getGroupMembers']);
 //
 $klein->respond('POST', '/user/auth', ['AuthController', 'studentLogin']);
 $klein->respond('POST', '/admin/auth', ['AuthController', 'teacherLogin']);
+
+$klein->respond('GET', '/user/compagno', ['StudentController', 'getMates']);
 
 /*
  * UTILS

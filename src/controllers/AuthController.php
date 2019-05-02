@@ -30,12 +30,14 @@ class AuthController {
                 'classe' => $entry['nome_classe']
             ];
         }, $dbres);
-        $res->json($data);
+        $res->json($data[0]);
+
+        $_SESSION['user'] = $data[0];
       }else{
-        $res->json(["message" => "Classe non in labratorio", "code" => 402]);
+        $res->json(["message" => "Classe non in labratorio", "code" => 403]);
       }
     }else{
-      $res->json(["message" => "Username o Password errati", "code" => 402, "uername"=> $parameters['username']]);
+      $res->json(["message" => "Username o Password errati", "code" => 401]);
     }
   }
 

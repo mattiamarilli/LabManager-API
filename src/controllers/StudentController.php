@@ -81,4 +81,13 @@ class StudentController {
 			$res->json(["message" => "Studente non eliminato", "code" => 500 ]);
 		}
     }
+
+    static function getMates($req, $res, $service, $app) {
+        $idClasse = $_SESSION['user']['id_classe'];
+
+        $stm = $app->db->prepare('SELECT id_studente, nome, cognome FROM studente WHERE id_classe = :classe');
+		$stm->bindValue(":classe", $idClasse);
+		$stm->execute();
+		$res->json($stm->fetchAll(PDO::FETCH_ASSOC));
+    }
 }
