@@ -22,12 +22,12 @@ class GroupController {
                 $stm = $app->db->prepare('INSERT INTO gruppo () VALUES ()');
                 $stm->execute();
                 
-                $idGruppo = $stm->lastInsertId();
+                $idGruppo = $app->db->lastInsertId();
             }
 
 
             $stm = $app->db->prepare('UPDATE studente SET id_gruppo=:id_gruppo WHERE id_studente IN (:id1, :id2)');
-            $stm->bindValue(":id_gruppo", $parameters['id_gruppo']);
+            $stm->bindValue(":id_gruppo", $idGruppo);
             $stm->bindValue(":id1", $_SESSION['user']['id']);   // current user
             $stm->bindValue(":id2", $parameters['id_studente']);// other user
             $stm->execute();
