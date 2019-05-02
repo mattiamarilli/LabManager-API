@@ -18,7 +18,7 @@ class ToolsController{
 
         $res->json($data);
     }
-    
+
      //POST /admin/utensile
     static function addTool($req, $res, $service, $app){
 			$parameters = $req->body();
@@ -33,7 +33,7 @@ class ToolsController{
 			$res->json(["message" => "Utensile non aggiunto", "code" => 500 ]);
 		}
     }
-    
+
     //DELETE /admin/utensile
     static function removeTool($req, $res, $service, $app){
 			$parameters = $req->body();
@@ -47,7 +47,7 @@ class ToolsController{
 			$res->json(["message" => "Utensile non rimosso", "code" => 500 ]);
 		}
     }
-    
+
     //DELETE /admin/utensile/segnalazione
     static function removeAlertTool($req, $res, $service, $app){
 			$parameters = $req->body();
@@ -61,7 +61,7 @@ class ToolsController{
 			$res->json(["message" => "Seganlazione non rimossa", "code" => 500 ]);
 		}
     }
-    
+
 
     //GET /admin/categoria
     static function getCategories($req, $res, $service, $app){
@@ -78,13 +78,12 @@ class ToolsController{
 
         $res->json($data);
     }
-    
+
     //POST /admin/categoria
     static function addCategory($req, $res, $service, $app){
 			$parameters = $req->body();
-			$paramaters = json_decode($parameters, true);
 			$stm = $app->db->prepare('INSERT INTO categoria (nome) VALUES (:nome)');
-			$stm->bindValue(":nome", $paramaters['nome']);
+			$stm->bindValue(":nome", $parameters);
 	    if($stm->execute()){
 				$res->json(["message" => "OK", "code" => 200 ]);
 		}
@@ -94,7 +93,7 @@ class ToolsController{
     }
 
     // GET /user/utensile
-    static function getUserTools($req, $res, $service, $app){ 
+    static function getUserTools($req, $res, $service, $app){
       // SELECT id_utensile, utensile.nome, utensile.id_categoria, categoria.nome AS categoria FROM utensile INNER JOIN categoria ON categoria.id_categoria = utensile.id_categoria WHERE id_utensile IN (SELECT id_utensile FROM evento INNER JOIN studente_evento ON studente_evento.id_evento = evento.id_evento AND studente_evento.id_studente = 1)
 
       $token = $req->headers()['token'];
