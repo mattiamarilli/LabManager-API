@@ -39,7 +39,7 @@ class GroupController {
             $stm->bindValue(":id2", $parameters['id_studente']);// other user
             $stm->execute();
 
-            $res->json(['id_gruppo' => $idGruppo]);
+            $res->json(['id_gruppo' => $idGruppo, 'studenti' => [ 'a' => $parameters['id_studente'], 'b' => $user['id_studente']]]);
     }
 
     // DELETE /user/gruppo
