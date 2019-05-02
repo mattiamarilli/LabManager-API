@@ -32,7 +32,7 @@ class GroupController {
             $stm->bindValue(":id2", $parameters['id_studente']);// other user
             $stm->execute();
 
-            $res->json(['id_gruppo' => $idGruppo])
+            $res->json(['id_gruppo' => $idGruppo]);
     }
 
     // DELETE /user/gruppo
