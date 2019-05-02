@@ -65,6 +65,7 @@ $klein->respond('GET', '/user/gruppo', ['GroupController', 'getGroupMembers']);
 $klein->respond('GET', '/user/utensile', ['ToolsController', 'getUserTools']);
 $klein->respond('POST', '/user/utensile', ['ToolsController', 'getTool']);
 $klein->respond('POST', '/user/utensile/release', ['ToolsController', 'releaseTool']);
+$klein->respond('POST', '/user/categoria', ['ToolsController', 'getCategory']);
 
 //
 $klein->respond('POST', '/user/auth', ['AuthController', 'studentLogin']);
