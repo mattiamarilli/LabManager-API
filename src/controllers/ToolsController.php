@@ -125,12 +125,10 @@ class ToolsController{
       $stm->execute();
       $user = $stm->fetch(PDO::FETCH_ASSOC);
 
-      $stm = $app->db->prepare('UPDATE evento SET fine = NOW() WHERE id_evento = (SELECT id_evento FROM evento INNER JOIN studente_evento ON studente_evento.id_evento = evento.id_evento AND studente_evento.id_studente = :studente AND evento.fine IS NULL AND evento.id_utensile = :utensile)');
+      $stm = $app->db->prepare('UPDATE evento SET fine = NOW() WHERE id_evento = (SELECT evento.id_evento FROM evento INNER JOIN studente_evento ON studente_evento.id_evento = evento.id_evento AND studente_evento.id_studente = :studente AND evento.fine IS NULL AND evento.id_utensile = :utensile)');
       $stm->bindValue(":studente", $user['id_studente']);
       $stm->bindValue(":utensile", $parameters['id_utensile']);
       $stm->execute();
-
-      $res->json($stm->fetchAll(PDO::FETCH_ASSOC));
 
     }
 
