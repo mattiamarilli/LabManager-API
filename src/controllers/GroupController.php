@@ -35,19 +35,25 @@ class GroupController {
 
             $stm = $app->db->prepare('UPDATE studente SET id_gruppo=:id_gruppo WHERE id_studente IN (:id1, :id2)');
             $stm->bindValue(":id_gruppo", $idGruppo);
-            $stm->bindValue(":id1", $user['id_studente']);   // current user
-            $stm->bindValue(":id2", $parameters['id_studente']);// other user
+            $stm->bindValue(":id1", +$user['id_studente']);   // current user
+            $stm->bindValue(":id2", +$parameters['id_studente']);// other user
             $stm->execute();
 
-            $res->json(['id_gruppo' => $idGruppo, 'studenti' => [ 'a' => $parameters['id_studente'], 'b' => $user['id_studente']]]);
+            $res->json(['id_gruppo' => $idGruppo, 'studenti' => [ 'a' => +$parameters['id_studente'], 'b' => +$user['id_studente']]]);
     }
 
     // DELETE /user/gruppo
     static function leaveGroup($req, $res, $service, $app){
-		$parameters = $req->body();
-        $parameters = json_decode($parameters, true);
+        $token = $req->headers()['token'];
+        $data = parseJwt($token);
+        $stm = $app->db->prepare('SELECT id_studente, nome, cognome, id_classe, id_gruppo FROM studente WHERE id_studente = :id');
+        $stm->bindValue(":id", $data['id']);
+        $stm->execute();
+        $user = $stm->fetch(PDO::FETCH_ASSOC);
+
+
         $stm = $app->db->prepare('UPDATE studente SET id_gruppo = NULL WHERE id_studente = :id_studente');
-		$stm->bindValue(":id_studente", $parameters['id_studente']);
+		$stm->bindValue(":id_studente", $user['id_studente']);
 		$stm->execute();
 
         $res->json(["message" => "OK", "code" => 200 ]);
