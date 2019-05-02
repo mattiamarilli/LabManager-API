@@ -5,6 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 header("Access-Control-Allow-Origin: http://localhost:4200");
 header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
 header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Credentials: true');
 
 foreach (glob("controllers/*Controller.php") as $filename)
     require_once $filename;
