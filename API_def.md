@@ -422,7 +422,7 @@ RESPONSE
 ]
 ```
 
-#### DELETE /user/utensile
+#### POST /user/utensile/release
 > Restituisce utensile
 
 BODY

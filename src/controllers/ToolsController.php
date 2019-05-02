@@ -129,7 +129,36 @@ class ToolsController{
       $stm->bindValue(":studente", $user['id_studente']);
       $stm->bindValue(":utensile", $parameters['id_utensile']);
       $stm->execute();
+    }
 
+    static function getTool($req, $res, $service, $app){
+      $parameters = $req->body();
+      $parameters = json_decode($parameters, true);
+
+      $token = $req->headers()['token'];
+      $data = parseJwt($token);
+      $stm = $app->db->prepare('SELECT id_studente, nome, cognome, id_classe, id_gruppo FROM studente WHERE id_studente = :id');
+      $stm->bindValue(":id", $data['id']);
+      $stm->execute();
+      $user = $stm->fetch(PDO::FETCH_ASSOC);
+
+      $stm = $app->db->prepare('SELECT COUNT(*) AS count FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_utensile = :id');
+      $stm->bindValue(":id", $parameters['id_utensile']);
+      $stm->execute();
+      if(+$stm->fetch(PDO::FETCH_ASSOC)['count'] == 0){
+        $res->json(["message" => "Utensile non disponibile", "code" => 400, "debug" =>  $parameters['id_utensile']]);
+        die();
+      }
+
+      $stm = $app->db->prepare('INSERT INTO evento (id_utensile) VALUES (:id)');
+      $stm->bindValue(":id", $parameters['id_utensile']);
+      $stm->execute();
+      $idEvento = $app->db->lastInsertId();
+
+      $stm = $app->db->prepare('INSERT INTO studente_evento (id_studente, id_evento) SELECT id_studente, :evento FROM studente WHERE id_gruppo = (SELECT id_gruppo FROM studente WHERE id_studente = :studente)');
+      $stm->bindValue(":evento", $idEvento);
+      $stm->bindValue(":studente", $user['id_studente']);
+      $stm->execute();
     }
 
 }
