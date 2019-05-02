@@ -93,6 +93,25 @@ class ToolsController{
 		}
     }
 
+    // GET /user/utensile
+    static function getUserTools($req, $res, $service, $app){ 
+      // SELECT id_utensile, utensile.nome, utensile.id_categoria, categoria.nome AS categoria FROM utensile INNER JOIN categoria ON categoria.id_categoria = utensile.id_categoria WHERE id_utensile IN (SELECT id_utensile FROM evento INNER JOIN studente_evento ON studente_evento.id_evento = evento.id_evento AND studente_evento.id_studente = 1)
+
+      $token = $req->headers()['token'];
+      $data = parseJwt($token);
+      $stm = $app->db->prepare('SELECT id_studente, nome, cognome, id_classe, id_gruppo FROM studente WHERE id_studente = :id');
+      $stm->bindValue(":id", $data['id']);
+      $stm->execute();
+      $user = $stm->fetch(PDO::FETCH_ASSOC);
+
+      $stm = $app->db->prepare('SELECT id_utensile, utensile.nome, utensile.id_categoria, categoria.nome AS categoria FROM utensile INNER JOIN categoria ON categoria.id_categoria = utensile.id_categoria WHERE id_utensile IN (SELECT id_utensile FROM evento INNER JOIN studente_evento ON studente_evento.id_evento = evento.id_evento AND studente_evento.id_studente = :id AND evento.fine IS NULL)');
+      $stm->bindValue(":id", $user['id_studente']);
+      $stm->execute();
+
+      $res->json($stm->fetchAll(PDO::FETCH_ASSOC));
+
+    }
+
 }
 
 

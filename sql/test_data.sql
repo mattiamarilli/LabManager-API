@@ -69,3 +69,9 @@ INSERT INTO utensile (nome, id_categoria) VALUES
 ('Fresa 1', '6'),
 ('Fresa 2', '6'),
 ('Fresa 3', '6');
+
+INSERT INTO `evento`(`id_utensile`) VALUES ('1');
+INSERT INTO `evento`(`id_utensile`) VALUES ('15');
+
+INSERT INTO `studente_evento`(`id_studente`, `id_evento`) VALUES (10, 1), (2, 1);
+INSERT INTO `studente_evento`(`id_studente`, `id_evento`) VALUES (10, 2), (2, 2);
