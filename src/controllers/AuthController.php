@@ -64,7 +64,6 @@ class AuthController {
       'classe' => $entry['nome_classe'],
       'token' => getJwt(['id' => +$entry['id_studente']])
     ]);
-        
   }
 
   static function teacherLogin($req, $res, $service, $app){
