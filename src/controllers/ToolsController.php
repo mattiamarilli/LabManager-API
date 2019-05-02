@@ -92,6 +92,35 @@ class ToolsController{
 		}
     }
 
+    //PUT /admin/categoria
+    static function modifyCategory($req, $res, $service, $app){
+			$parameters = $req->body();
+			$parameters = json_decode($parameters, true);
+      $stm = $app->db->prepare('UPDATE categoria SET nome = :nome WHERE id_categoria = :id_categoria');
+      $stm->bindValue(":nome", $parameters['nome']);
+      $stm->bindValue(":id_categoria", $parameters['id_categoria']);
+      $stm->execute();
+      if($stm->rowCount() > 0){
+          $res->json(["message" => "OK", "code" => 200 ]);
+      }else{
+          $res->json(["message" => "Categoria non modificato", "code" => 500 ]);
+      }
+    }
+
+    //DELETE /admin/categoria
+    static function deleteCategory($req, $res, $service, $app){
+			$parameters = $req->body();
+      $parameters = json_decode($parameters, true);
+      $stm = $app->db->prepare('DELETE FROM categoria WHERE id_categoria=:id_categoria');
+      $stm->bindValue(":id_categoria", $parameters['id_categoria']);
+      $stm->execute();
+      if($stm->rowCount() > 0){
+        $res->json(["message" => "OK", "code" => 200 ]);
+      }else{
+        $res->json(["message" => "Docente non eliminato", "code" => 500 ]);
+      }
+    }
+
     // GET /user/utensile
     static function getUserTools($req, $res, $service, $app){
       // SELECT id_utensile, utensile.nome, utensile.id_categoria, categoria.nome AS categoria FROM utensile INNER JOIN categoria ON categoria.id_categoria = utensile.id_categoria WHERE id_utensile IN (SELECT id_utensile FROM evento INNER JOIN studente_evento ON studente_evento.id_evento = evento.id_evento AND studente_evento.id_studente = 1)

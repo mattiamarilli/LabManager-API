@@ -49,6 +49,8 @@ $klein->respond('POST', '/admin/utensile', ['ToolsController', 'addTool']);
 $klein->respond('DELETE', '/admin/utensile', ['ToolsController', 'removeTool']);
 $klein->respond('DELETE', '/admin/utensile/segnalazione', ['ToolsController', 'removeAlertTool']);
 $klein->respond('POST', '/admin/categoria', ['ToolsController', 'addCategory']);
+$klein->respond('PUT', '/admin/categoria', ['ToolsController', 'modifyCategory']);
+$klein->respond('DELETE', '/admin/categoria', ['ToolsController', 'deleteCategory']);
 
 //Docente
 $klein->respond('GET', '/admin/docente', ['TeacherController', 'getTeachers']);
