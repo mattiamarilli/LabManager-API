@@ -206,14 +206,16 @@ class ToolsController{
       $stm = $app->db->prepare('INSERT INTO evento (id_utensile) SELECT id_utensile FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_categoria = :id LIMIT 1');
       $stm->bindValue(":id", $parameters['id_categoria']);
       $stm->execute();
-      $idEvento = $app->db->lastInsertId();
+      $idEvento = +$app->db->lastInsertId();
 
-      $stm = $app->db->prepare('INSERT INTO studente_evento (id_studente, id_evento) SELECT id_studente, :evento FROM studente WHERE id_gruppo = (SELECT id_gruppo FROM studente WHERE id_studente = :studente)');
+
+
+      $stm = $app->db->prepare('INSERT INTO studente_evento (id_studente, id_evento) SELECT id_studente, :evento FROM studente WHERE id_gruppo = (SELECT id_gruppo FROM studente WHERE id_studente = :studente) OR id_studente = :studente');
       $stm->bindValue(":evento", $idEvento);
       $stm->bindValue(":studente", $user['id_studente']);
       $stm->execute();
 
-      $res->json(["message" => "OK", "code" => 200 ]);
+      $res->json(["message" => "OK", "code" => 200, "debug" => $app->db->errorInfo() ]);
     }
 
 }
