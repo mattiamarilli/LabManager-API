@@ -61,4 +61,5 @@ CREATE TABLE studente_evento (
 );
 
 CREATE VIEW utensile_abilitato AS SELECT * FROM utensile WHERE lock = FALSE AND deleted = FALSE;
-CREATE VIEW classe_corrente AS SELECT * FROM classe WHERE anno =  YEAR(DATE_ADD('2018-07-25', INTERVAL -7 MONTH)); -- FROM 1/8 to 31/7
+CREATE VIEW classe_corrente AS SELECT * FROM classe WHERE anno = YEAR(DATE_ADD('2018-07-25', INTERVAL -7 MONTH)); -- FROM 1/8 to 31/7
+CREATE VIEW studente_corrente AS SELECT * FROM studente WHERE id_classe IN (SELECT id_classe FROM classe_corrente);

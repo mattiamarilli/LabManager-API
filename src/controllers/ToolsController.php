@@ -200,6 +200,16 @@ class ToolsController{
         die();
       }
 
+      /* READY FOR THE FUTURE!
+      $stm = $app->db->prepare('SELECT lock FROM utensile WHERE id_utensile = :id');
+      $stm->bindValue(":id", $parameters['id_utensile']);
+      $stm->execute();
+      if(!!$stm->fetch(PDO::FETCH_ASSOC)['segnala']){
+        $res->json(["message" => "Utensile segnalato", "code" => 400, "debug" =>  $parameters['id_utensile']]);
+        die();
+      }
+      */
+
       $stm = $app->db->prepare('INSERT INTO evento (id_utensile) VALUES (:id)');
       $stm->bindValue(":id", $parameters['id_utensile']);
       $stm->execute();
