@@ -22,7 +22,7 @@ devbuild:
 
 .PHONY: devdown
 devdown:
-	$(DEVDCOMPOSE) down
+	$(DEVCOMPOSE) down
 
 .PHONY: devclear
 devclear:

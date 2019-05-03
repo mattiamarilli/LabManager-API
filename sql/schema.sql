@@ -42,7 +42,9 @@ CREATE TABLE utensile (
   id_utensile   serial PRIMARY KEY,
   nome          varchar(64),
   id_categoria  BIGINT UNSIGNED REFERENCES categoria (id_categoria),
-  segnala       boolean NOT NULL DEFAULT FALSE
+  segnala       boolean NOT NULL DEFAULT FALSE,
+  lock          boolean NOT NULL DEFAULT FALSE,
+  deleted       boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE evento (
@@ -57,3 +59,6 @@ CREATE TABLE studente_evento (
   id_studente        bigint UNSIGNED NOT NULL REFERENCES studente (id_studente),
   id_evento          bigint UNSIGNED NOT NULL REFERENCES evento (id_evento)
 );
+
+CREATE VIEW utensile_abilitato AS SELECT * FROM utensile WHERE lock = FALSE AND deleted = FALSE;
+CREATE VIEW classe_corrente AS SELECT * FROM classe WHERE anno =  YEAR(DATE_ADD('2018-07-25', INTERVAL -7 MONTH)); -- FROM 1/8 to 31/7

@@ -173,6 +173,12 @@ class ToolsController{
       $stm->bindValue(":studente", $user['id_studente']);
       $stm->bindValue(":utensile", $parameters['id_utensile']);
       $stm->execute();
+
+      if($parameters['segnala']) {
+        $stm = $app->db->prepare('UPDATE utensile SET segnala = TRUE WHERE id_utensile = :id');
+        $stm->bindValue(":id", $parameters['id_utensile']);
+        $stm->execute();
+      }
     }
 
     static function getTool($req, $res, $service, $app){
