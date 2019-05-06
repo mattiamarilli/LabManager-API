@@ -67,6 +67,30 @@ class AuthController {
   }
 
   static function teacherLogin($req, $res, $service, $app){
-    $res->json(['ciao'=>'ciao']);
+    $parameters = $req->body();
+    $parameters = json_decode($parameters, true);
+    $stm = $app->db->prepare('SELECT * FROM docente WHERE username = :username and password = :password');
+    $stm->bindValue(":username", $parameters['username']);
+    $stm->bindValue(":password", $parameters['password']);
+    $stm->execute();
+    if($stm->rowCount() > 0){
+        $var = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $data = array_map(function($entry){
+            return [
+                'id' => +$entry['id_docente'],
+                'nome' => $entry['nome'],
+                'cognome' => $entry['cognome'],
+                'admin' => $entry['admin'],
+                'token' => getJwt(['id' => +$entry['id_docente']])
+            ];
+        }, $var);
+        $res->json($data[0]);
+    }else{
+      $res->json(["message" => "Username o Password errati", "code" => 401]);
+    }
   }
+
+
+
 }
+
