@@ -45,6 +45,12 @@ class ClassController {
 		//$parameters = $req->paramPost();
 		$parameters = $req->body();
 		$paramaters = json_decode($parameters, true);
+
+		$stm = $app->db->prepare('SELECT * FROM classe WHERE abilita = 1');
+		$stm->execute();
+
+		if($stm->rowCount() == 0)
+		{
 		$stm = $app->db->prepare('UPDATE classe SET abilita = true WHERE id_classe = :id_classe');
 		$stm->bindValue(":id_classe", $paramaters['id_classe']);
 		$stm->execute();
@@ -55,6 +61,10 @@ class ClassController {
 		else{
 			$res->json(["message" => "Classe non attivata", "code" => 500 ]);
 		}
+	}
+	else{
+		$res->json(["message" => "Non puoi attivare due classi contemporaneamente", "code" => 403 ]);
+	}
 	}
 	//DELETE /admin/classe/enable
 	static function disableClass($req, $res, $service, $app){
