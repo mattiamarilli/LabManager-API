@@ -221,7 +221,7 @@ class ToolsController{
       $stm->execute();
       $user = $stm->fetch(PDO::FETCH_ASSOC);
 
-      $stm = $app->db->prepare('SELECT COUNT(*) AS count FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_utensile = :id');
+      $stm = $app->db->prepare('SELECT COUNT(*) AS count FROM utensile WHERE id_utensile NOT IN (SELECT id_utensile FROM evento WHERE fine IS NULL) AND id_utensile = :id AND id_utensile NOT IN (SELECT id_utensile FROM utensile WHERE locked=true) ' );
       $stm->bindValue(":id", $parameters['id_utensile']);
       $stm->execute();
       if(+$stm->fetch(PDO::FETCH_ASSOC)['count'] == 0){
