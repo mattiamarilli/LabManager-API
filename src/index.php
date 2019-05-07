@@ -49,6 +49,8 @@ $klein->respond('POST', '/admin/utensile', ['ToolsController', 'addTool']);
 $klein->respond('PUT', '/admin/utensile', ['ToolsController', 'modifyTool']);
 $klein->respond('DELETE', '/admin/utensile', ['ToolsController', 'removeTool']);
 $klein->respond('DELETE', '/admin/utensile/segnalazione', ['ToolsController', 'removeAlertTool']);
+$klein->respond('POST', '/admin/utensile/blocco', ['ToolsController', 'lockTool']);
+$klein->respond('DELETE', '/admin/utensile/blocco', ['ToolsController', 'removeLockTool']);
 $klein->respond('POST', '/admin/categoria', ['ToolsController', 'addCategory']);
 $klein->respond('PUT', '/admin/categoria', ['ToolsController', 'modifyCategory']);
 $klein->respond('DELETE', '/admin/categoria', ['ToolsController', 'deleteCategory']);

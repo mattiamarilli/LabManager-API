@@ -2,7 +2,7 @@
 class ToolsController{
     //GET /admin/utensile
     static function getTools($req, $res, $service, $app){
-        $stm = $app->db->prepare('SELECT u.id_utensile,u.nome,u.id_categoria,u.segnala, c.nome AS categoria FROM utensile u INNER JOIN categoria c ON u.id_categoria=c.id_categoria');
+        $stm = $app->db->prepare('SELECT u.id_utensile,u.nome,u.id_categoria,u.locked,u.segnala, c.nome AS categoria FROM utensile u INNER JOIN categoria c ON u.id_categoria=c.id_categoria');
         $stm->execute();
         $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
 
@@ -12,6 +12,7 @@ class ToolsController{
                 'nome' => $entry['nome'],
                 'id_categoria' => $entry['id_categoria'],
                 'segnala' => $entry['segnala'],
+                'locked' => $entry['locked'],
                 'categoria' => $entry['categoria'],
             ];
         }, $dbres);
@@ -75,6 +76,34 @@ class ToolsController{
 		}
 		else{
 			$res->json(["message" => "Seganlazione non rimossa", "code" => 500 ]);
+		}
+    }
+
+    //POST /admin/utensile/blocco
+    static function lockTool($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('UPDATE utensile SET locked=true WHERE id_utensile=:id');
+			$stm->bindValue(":id", $paramaters['id']);
+	    if($stm->execute()){
+				$res->json(["message" => $paramaters['id'], "code" => 200 ]);
+		}
+		else{
+			$res->json(["message" => "Oggetto non bloccato", "code" => 500 ]);
+		}
+    }
+
+    //DELETE /admin/utensile/blocco
+    static function removeLockTool($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('UPDATE utensile SET locked=false WHERE id_utensile=:id');
+			$stm->bindValue(":id", $paramaters['id']);
+	    if($stm->execute()){
+				$res->json(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json(["message" => "Oggetto non sbloccato", "code" => 500 ]);
 		}
     }
 
