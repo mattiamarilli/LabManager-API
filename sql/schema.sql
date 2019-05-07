@@ -43,7 +43,7 @@ CREATE TABLE utensile (
   nome          varchar(64),
   id_categoria  BIGINT UNSIGNED REFERENCES categoria (id_categoria),
   segnala       boolean NOT NULL DEFAULT FALSE,
-  lock          boolean NOT NULL DEFAULT FALSE,
+  locked          boolean NOT NULL DEFAULT FALSE,
   deleted       boolean NOT NULL DEFAULT FALSE
 );
 
@@ -60,6 +60,6 @@ CREATE TABLE studente_evento (
   id_evento          bigint UNSIGNED NOT NULL REFERENCES evento (id_evento)
 );
 
-CREATE VIEW utensile_abilitato AS SELECT * FROM utensile WHERE lock = FALSE AND deleted = FALSE;
-CREATE VIEW classe_corrente AS SELECT * FROM classe WHERE anno = YEAR(DATE_ADD(CURDATE(), INTERVAL -7 MONTH)); -- FROM 1/8 to 31/7
-CREATE VIEW studente_corrente AS SELECT * FROM studente WHERE id_classe IN (SELECT id_classe FROM classe_corrente);
+-- CREATE VIEW utensile_abilitato AS SELECT * FROM utensile WHERE lock = FALSE AND deleted = FALSE;
+-- CREATE VIEW classe_corrente AS SELECT * FROM classe WHERE anno = YEAR(DATE_ADD(CURDATE(), INTERVAL -7 MONTH)); -- FROM 1/8 to 31/7
+-- CREATE VIEW studente_corrente AS SELECT * FROM studente WHERE id_classe IN (SELECT id_classe FROM classe_corrente);
