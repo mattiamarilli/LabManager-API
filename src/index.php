@@ -59,6 +59,8 @@ $klein->respond('DELETE', '/admin/categoria', ['ToolsController', 'deleteCategor
 $klein->respond('GET', '/admin/docente', ['TeacherController', 'getTeachers']);
 $klein->respond('POST', '/admin/docente', ['TeacherController', 'addTeacher']);
 $klein->respond('POST', '/admin/docente/password', ['AuthController', 'modifyPasswordDoc']);
+$klein->respond('POST', '/admin/password/resetdoc', ['AuthController', 'resetPasswordDoc']);
+$klein->respond('POST', '/user/password/resetstud', ['AuthController', 'resetPasswordStudent']);
 $klein->respond('PUT', '/admin/docente', ['TeacherController', 'modifyTeacher']);
 $klein->respond('DELETE', '/admin/docente', ['TeacherController', 'deleteTeacher']);
 
@@ -81,6 +83,7 @@ $klein->respond('POST', '/user/renew', ['AuthController', 'studentRenew']);
 
 $klein->respond('POST', '/admin/auth', ['AuthController', 'teacherLogin']);
 $klein->respond('POST', '/user/password', ['AuthController', 'modifyPasswordStud']);
+
 $klein->respond('GET', '/user/compagno', ['StudentController', 'getMates']);
 
 /*
