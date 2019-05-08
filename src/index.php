@@ -80,6 +80,7 @@ $klein->respond('POST', '/user/renew', ['AuthController', 'studentRenew']);
 
 
 $klein->respond('POST', '/admin/auth', ['AuthController', 'teacherLogin']);
+$klein->respond('POST', '/user/password', ['AuthController', 'modifyPasswordStud']);
 $klein->respond('GET', '/user/compagno', ['StudentController', 'getMates']);
 
 /*
