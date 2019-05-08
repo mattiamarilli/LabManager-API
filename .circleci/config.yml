@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     steps:
-      - echo "nothing here"
+      - run: echo "nothing here"
   deploy:
     machine:
       enabled: true
