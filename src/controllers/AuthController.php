@@ -119,14 +119,26 @@ class AuthController {
   static function modifyPasswordStud($req, $res, $service, $app){
     $parameters = $req->body();
     $parameters = json_decode($parameters, true);
-    $stm = $app->db->prepare('UPDATE studente SET password=:password WHERE id_studente = :id');
+    $stm = $app->db->prepare('SELECT * FROM studente where id_studente = :id AND password = :oldpassword');
     $stm->bindValue(":id", $parameters['id']);
-    $stm->bindValue(":password", $parameters['password']);
-    if($stm->execute()){
-      $res->json(["message" => "OK", "code" => 200 ]);
+    $stm->bindValue(":oldpassword", $parameters['oldpassword']);
+    $stm->execute();
+    if($stm->rowCount())
+    {
+      $stm = $app->db->prepare('UPDATE studente SET password=:newpassword WHERE id_studente = :id' );
+      $stm->bindValue(":id", $parameters['id']);
+      $stm->bindValue(":newpassword", $parameters['newpassword']);
+        if($stm->execute()){
+          $res->json(["message" => "OK", "code" => 200 ]);
+        }
+        else{
+          $res->json(["message" => "Password non modificata", "code" => 500 ]);
+        }
     }
+    
+    
     else{
-      $res->json(["message" => "Docente non aggiunto", "code" => 500 ]);
+      $res->json(["message" => "Vecchia Password non corretta", "code" => $stm->rowCount()]);
     }
   }
 
