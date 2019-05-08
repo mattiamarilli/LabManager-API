@@ -166,6 +166,9 @@ class AuthController {
       $stm->bindValue(":password", $password);
       if($stm->execute())
         $res->json(["message" => "OK", "code" => 200]);
+        else{
+          $res->json(["message" => "Password non resetta", "code" => 500]);
+        }
     }
     
     else{
@@ -176,17 +179,34 @@ class AuthController {
   static function resetPasswordDoc($req, $res, $service, $app){
     $parameters = $req->body();
     $parameters = json_decode($parameters, true);
-    $stm = $app->db->prepare('SELECT * FROM studente where id_studente = :id');
+    $stm = $app->db->prepare('SELECT nome,cognome FROM docente where id_docente = :id ');
     $stm->bindValue(":id", $parameters['id']);
     $stm->execute();
     if($stm->rowCount())
     {
-     
+      
+      $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+      $data = array_map(function($entry){
+          return [
+              'nome' => $entry['nome'],
+              'cognome' => $entry['cognome'],
+          ];
+      }, $dbres);
+
+      $password = $data[0]['nome'] . '.' . $data[0]['cognome'];
+      $stm = $app->db->prepare("UPDATE docente SET password=:password WHERE id_docente =:id");
+      $stm->bindValue(":id", $parameters['id']);
+      $stm->bindValue(":password", $password);
+      if($stm->execute())
+        $res->json(["message" => "OK", "code" => 200]);
+        else{
+          $res->json(["message" => "Password non resetta", "code" => 500]);
+        }
     }
     
-    
     else{
-      $res->json(["message" => "Vecchia Password non corretta", "code" => $stm->rowCount()]);
+      $res->json(["message" => "Password non resetta", "code" => 500]);
     }
   }
 
