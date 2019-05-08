@@ -82,7 +82,7 @@ class ToolsController{
     //POST /admin/utensile/blocco
     static function lockTool($req, $res, $service, $app){
 			$parameters = $req->body();
-			$paramaters = json_decode($parameters, true);
+			//$paramaters = json_decode($parameters, true);
 			$stm = $app->db->prepare('UPDATE utensile SET locked=true WHERE id_utensile=:id');
 			$stm->bindValue(":id", $paramaters['id']);
 	    if($stm->execute()){
