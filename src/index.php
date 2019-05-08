@@ -58,6 +58,7 @@ $klein->respond('DELETE', '/admin/categoria', ['ToolsController', 'deleteCategor
 //Docente
 $klein->respond('GET', '/admin/docente', ['TeacherController', 'getTeachers']);
 $klein->respond('POST', '/admin/docente', ['TeacherController', 'addTeacher']);
+$klein->respond('POST', '/admin/docente/password', ['TeacherController', 'modifyPasswordDoc']);
 $klein->respond('PUT', '/admin/docente', ['TeacherController', 'modifyTeacher']);
 $klein->respond('DELETE', '/admin/docente', ['TeacherController', 'deleteTeacher']);
 

@@ -90,6 +90,47 @@ class AuthController {
     }
   }
 
+  static function modifyPasswordDoc($req, $res, $service, $app){
+    $parameters = $req->body();
+    $parameters = json_decode($parameters, true);
+    $stm = $app->db->prepare('SELECT * FROM docente where id_docente:id AND password = :oldpassword');
+    $stm->bindValue(":id", $parameters['id']);
+    $stm->bindValue(":oldpassword", $parameters['oldpassword']);
+    $stm->execute();
+    if($stm->rowCount()> 0)
+    {$stm = $app->db->prepare('UPDATE docente SET password=:password WHERE id_docente = :id' );
+    $stm->bindValue(":id", $parameters['id']);
+    $stm->bindValue(":oldpassword", $parameters['oldpassword']);
+    $stm->bindValue(":newpassword", $parameters['newpassword']);
+    if($stm->execute()){
+      $res->json(["message" => "OK", "code" => 200 ]);
+    }
+    else{
+      $res->json(["message" => "Password non modificata", "code" => 500 ]);
+    }
+    }
+    
+    else{
+      $res->json(["message" => "Vecchia Password non corretta", "code" => 500 ]);
+    }
+  }
+
+  static function modifyPasswordStud($req, $res, $service, $app){
+    $parameters = $req->body();
+    $parameters = json_decode($parameters, true);
+    $stm = $app->db->prepare('UPDATE studente SET password=:password WHERE id_studente = :id');
+    $stm->bindValue(":id", $parameters['id']);
+    $stm->bindValue(":password", $parameters['password']);
+    if($stm->execute()){
+      $res->json(["message" => "OK", "code" => 200 ]);
+    }
+    else{
+      $res->json(["message" => "Docente non aggiunto", "code" => 500 ]);
+    }
+  }
+
+  
+
 
 
 }
