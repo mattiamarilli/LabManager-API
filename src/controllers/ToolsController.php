@@ -86,7 +86,7 @@ class ToolsController{
 			$stm = $app->db->prepare('UPDATE utensile SET locked=true WHERE id_utensile=:id');
 			$stm->bindValue(":id", $paramaters['id']);
 	    if($stm->execute()){
-				$res->json(["message" => $paramaters['id'], "code" => 200 ]);
+				$res->json(["message" => "OK", "code" => 200 ]);
 		}
 		else{
 			$res->json(["message" => "Oggetto non bloccato", "code" => 500 ]);
