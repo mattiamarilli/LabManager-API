@@ -90,6 +90,60 @@ class AuthController {
     }
   }
 
+  static function modifyPasswordDoc($req, $res, $service, $app){
+    $parameters = $req->body();
+    $parameters = json_decode($parameters, true);
+    $stm = $app->db->prepare('SELECT * FROM docente where id_docente = :id AND password = :oldpassword');
+    $stm->bindValue(":id", $parameters['id']);
+    $stm->bindValue(":oldpassword", $parameters['oldpassword']);
+    $stm->execute();
+    if($stm->rowCount())
+    {
+      $stm = $app->db->prepare('UPDATE docente SET password=:newpassword WHERE id_docente = :id' );
+      $stm->bindValue(":id", $parameters['id']);
+      $stm->bindValue(":newpassword", $parameters['newpassword']);
+        if($stm->execute()){
+          $res->json(["message" => "OK", "code" => 200 ]);
+        }
+        else{
+          $res->json(["message" => "Password non modificata", "code" => 500 ]);
+        }
+    }
+    
+    
+    else{
+      $res->json(["message" => "Vecchia Password non corretta", "code" => $stm->rowCount()]);
+    }
+  }
+
+  static function modifyPasswordStud($req, $res, $service, $app){
+    $parameters = $req->body();
+    $parameters = json_decode($parameters, true);
+    $stm = $app->db->prepare('SELECT * FROM studente where id_studente = :id AND password = :oldpassword');
+    $stm->bindValue(":id", $parameters['id']);
+    $stm->bindValue(":oldpassword", $parameters['oldpassword']);
+    $stm->execute();
+    if($stm->rowCount())
+    {
+      $stm = $app->db->prepare('UPDATE studente SET password=:newpassword WHERE id_studente = :id' );
+      $stm->bindValue(":id", $parameters['id']);
+      $stm->bindValue(":newpassword", $parameters['newpassword']);
+        if($stm->execute()){
+          $res->json(["message" => "OK", "code" => 200 ]);
+        }
+        else{
+          $res->json(["message" => "Password non modificata", "code" => 500 ]);
+        }
+    }
+    
+    
+    else{
+      $res->json(["message" => "Vecchia Password non corretta", "code" => $stm->rowCount()]);
+    }
+  }
+
+  
+
 
 
 }
