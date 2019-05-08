@@ -32,7 +32,7 @@ class StudentController {
     static function addStudent($req, $res, $service, $app){
         $parameters = $req->body();
         $parameters = json_decode($parameters, true);
-        $password = self::generateRandomPassword();
+        $password = $parameters['nome'] . "." . $parameters['cognome'];
         $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
 		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password, id_gruppo) VALUES (:nome, :cognome, :id_classe, :username, :password, null)');
 		$stm->bindValue(":nome", $parameters['nome']);
@@ -47,11 +47,6 @@ class StudentController {
 			$res->json(["message" => "Studente non aggiunto", "code" => 500 ]);
 		}
     }
-
-	//Genera stringa alfanumerica random
-	function generateRandomPassword($length = 10) {
-		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
-	}
 
     static function modifyStudent($req, $res, $service, $app){
         $parameters = $req->body();

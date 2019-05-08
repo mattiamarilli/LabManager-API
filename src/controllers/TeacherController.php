@@ -18,7 +18,7 @@ class TeacherController{
   static function addTeacher($req, $res, $service, $app){
       $parameters = $req->body();
       $parameters = json_decode($parameters, true);
-      $password = self::generateRandomPassword();
+      $password = $parameters['nome'] . "." . $parameters['cognome'];
       $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
       $stm = $app->db->prepare('INSERT INTO docente (nome, cognome, username, password, admin) VALUES (:nome, :cognome, :username, :password, :admin)');
       $stm->bindValue(":nome", $parameters['nome']);
@@ -33,11 +33,6 @@ class TeacherController{
         $res->json(["message" => "Docente non aggiunto", "code" => 500 ]);
       }
   }
-
-  //Genera stringa alfanumerica random
-	function generateRandomPassword($length = 10) {
-		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
-	}
 
   //PUT /admin/docente
   static function modifyTeacher($req, $res, $service, $app){
