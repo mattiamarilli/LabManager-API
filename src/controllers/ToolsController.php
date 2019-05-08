@@ -12,7 +12,7 @@ class ToolsController{
                 'nome' => $entry['nome'],
                 'id_categoria' => $entry['id_categoria'],
                 'segnala' => +$entry['segnala'],
-                'locked' => $entry['locked'],
+                'locked' => +$entry['locked'],
                 'categoria' => $entry['categoria'],
             ];
         }, $dbres);
