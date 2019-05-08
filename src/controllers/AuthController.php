@@ -99,9 +99,8 @@ class AuthController {
     $stm->execute();
     if($stm->rowCount()> 0)
     {
-      $stm = $app->db->prepare('UPDATE docente SET password=:password WHERE id_docente = :id' );
+      $stm = $app->db->prepare('UPDATE docente SET password=:newpassword WHERE id_docente = :id' );
       $stm->bindValue(":id", $parameters['id']);
-      $stm->bindValue(":oldpassword", $parameters['oldpassword']);
       $stm->bindValue(":newpassword", $parameters['newpassword']);
         if($stm->execute()){
           $res->json(["message" => "OK", "code" => 200 ]);
