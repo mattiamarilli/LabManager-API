@@ -13,3 +13,5 @@ services:
       - mariadb:database
     ports:
       - 8000:80
+    labels:
+      - "traefik.frontend.rule=Host:api.forum.vivedo.me"
