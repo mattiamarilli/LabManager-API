@@ -5,8 +5,12 @@ DEVCOMPOSE=$(COMPOSE) -f docker/docker-compose.dev.yml
 PRODCOMPOSE=$(COMPOSE)
 
 .PHONY: upd
-upd: setup
+upd:
 	$(PRODCOMPOSE) up -d
+
+.PHONY: up
+up:
+	$(PRODCOMPOSE) up
 
 .PHONY: down
 down:
