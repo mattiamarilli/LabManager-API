@@ -11,8 +11,8 @@ class ToolsController{
                 'id_utensile' => +$entry['id_utensile'],
                 'nome' => $entry['nome'],
                 'id_categoria' => $entry['id_categoria'],
-                'segnala' => $entry['segnala'],
-                'locked' => $entry['locked'],
+                'segnala' => +$entry['segnala'],
+                'locked' => +$entry['locked'],
                 'categoria' => $entry['categoria'],
             ];
         }, $dbres);
