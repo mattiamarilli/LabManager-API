@@ -21,7 +21,7 @@ devup:
 	$(DEVCOMPOSE) up
 
 .PHONY: devupd
-devup:
+devupd:
 	$(DEVCOMPOSE) up -d
 
 .PHONY: devbuild
