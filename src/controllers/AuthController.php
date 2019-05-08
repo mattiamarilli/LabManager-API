@@ -161,7 +161,7 @@ class AuthController {
       }, $dbres);
 
       $password = $data[0]['nome'] . '.' . $data[0]['cognome'];
-      $query = "UPDATE studente SET password=' . $password . ' WHERE id_studente =:id";
+      $query = "UPDATE studente SET password=" . $password . " WHERE id_studente =:id";
       $stm = $app->db->prepare($query);
       $stm->bindValue(":id", $parameters['id']);
       if($stm->execute())
