@@ -20,6 +20,10 @@ down:
 devup:
 	$(DEVCOMPOSE) up
 
+.PHONY: devupd
+devup:
+	$(DEVCOMPOSE) up -d
+
 .PHONY: devbuild
 devbuild:
 	$(DEVCOMPOSE) build
