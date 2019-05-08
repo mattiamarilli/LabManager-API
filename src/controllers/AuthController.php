@@ -97,7 +97,7 @@ class AuthController {
     $stm->bindValue(":id", $parameters['id']);
     $stm->bindValue(":oldpassword", $parameters['oldpassword']);
     $stm->execute();
-    if($stm->rowCount()> 0)
+    if($stm->rowCount() > 0)
     {
       $stm = $app->db->prepare('UPDATE docente SET password=:newpassword WHERE id_docente = :id' );
       $stm->bindValue(":id", $parameters['id']);
@@ -111,7 +111,7 @@ class AuthController {
     }
     
     else{
-      $res->json(["message" => "Vecchia Password non corretta", "code" => 500 ]);
+      $res->json(["message" => "Vecchia Password non corretta", "code" =>  $parameters['id'] . $parameters['oldpassword']]);
     }
   }
 
