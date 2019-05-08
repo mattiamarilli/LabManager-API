@@ -161,7 +161,8 @@ class AuthController {
       }, $dbres);
 
       $password = $data[0]['nome'] . '.' . $data[0]['cognome'];
-      $stm = $app->db->prepare('UPDATE studente SET password=' . $password . ' WHERE id_studente =:id ');
+      $query = "UPDATE studente SET password=' . $password . ' WHERE id_studente =:id"
+      $stm = $app->db->prepare(query);
       $stm->bindValue(":id", $parameters['id']);
       if($stm->execute())
         $res->json(["message" => "OK", "code" => 200]);
