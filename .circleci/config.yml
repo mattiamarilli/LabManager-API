@@ -1,5 +1,8 @@
 version: 2
 jobs:
+  build:
+    steps:
+      - echo "nothing here"
   deploy:
     machine:
       enabled: true
