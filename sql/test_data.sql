@@ -27,9 +27,9 @@ INSERT INTO studente (nome,cognome, password, username, id_classe) VALUES
 ('Prova','Prova','$2y$10$7fk0u0Rt9dEhoT7iO1tBf.9I4xB4fl6CZthaiY3GsiD3FzX3R.JX6','prova','3');
 
 INSERT INTO docente (nome, cognome, username, password) VALUES
-('Pipp', 'One', 'docente1', 'dummypassword'),
-('Scop', 'One', 'docente2', 'dummypassword'),
-('Swagg', 'One','docente3', 'dummypassword');
+('Mario', 'Rossi', 'docente1', 'dummypassword'),
+('Luigi', 'Verdi', 'docente2', 'dummypassword'),
+('Marco', 'Bianchi','docente3', 'dummypassword');
 
 INSERT INTO categoria (nome) VALUES
 ('Punte trapano da 28mm'),
