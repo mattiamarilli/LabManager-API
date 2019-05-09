@@ -95,14 +95,15 @@ class ToolsController{
     //DELETE /admin/utensile/blocco
     static function removeLockTool($req, $res, $service, $app){
 			$parameters = $req->body();
-			$parameters = json_decode($parameters, true);
-			$stm = $app->db->prepare('UPDATE utensile SET locked=false WHERE id_utensile=:id');
-			$stm->bindValue(":id", $parameters["id"]);
-	    if($stm->execute()){
-				$res->json(["message" => "OK", "code" => 200 ]);
-			}else{
-				$res->json(["message" => "Oggetto non sbloccato", "code" => 500 ]);
-			}
+      $parameters = json_decode($parameters, true);
+      $stm = $app->db->prepare('UPDATE utensile SET locked=false WHERE id_utensile:id_utensile');
+      $stm->bindValue(":id_utensile", $parameters['id']);
+      $stm->execute();
+      if($stm->rowCount() > 0){
+        $res->json(["message" => "OK", "code" => 200 ]);
+      }else{
+        $res->json(["message" => "Docente non eliminato", "code" => 500 ]);
+      }
     }
 
 
