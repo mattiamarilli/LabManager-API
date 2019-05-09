@@ -3,7 +3,7 @@ CREATE SCHEMA labmanager;
 USE labmanager;
 
 CREATE TABLE classe (
-  id_classe   serial PRIMARY KEY,
+  id_classe   serial      PRIMARY KEY,
   nome        varchar(64) NOT NULL,
   anno        int(4)      NOT NULL,
   abilita     boolean     NOT NULL DEFAULT FALSE,
@@ -20,7 +20,7 @@ CREATE TABLE studente (
   cognome     varchar(64) NOT NULL,
   username    varchar(64) NOT NULL UNIQUE,
   password    varchar(64) NOT NULL,
-  id_classe   BIGINT UNSIGNED NOT NULL REFERENCES classe (id_classe),
+  id_classe   BIGINT UNSIGNED NOT NULL REFERENCES classe (id_classe) ON UPDATE CASCADE ON DELETE CASCADE,
   id_gruppo   BIGINT UNSIGNED REFERENCES gruppo (id_gruppo)
 );
 
@@ -41,23 +41,23 @@ CREATE TABLE categoria (
 CREATE TABLE utensile (
   id_utensile   serial PRIMARY KEY,
   nome          varchar(64),
-  id_categoria  BIGINT UNSIGNED REFERENCES categoria (id_categoria),
+  id_categoria  BIGINT UNSIGNED REFERENCES categoria (id_categoria) ON UPDATE CASCADE ON DELETE SET NULL,
   segnala       boolean NOT NULL DEFAULT FALSE,
-  locked          boolean NOT NULL DEFAULT FALSE,
+  locked        boolean NOT NULL DEFAULT FALSE,
   deleted       boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE evento (
   id_evento   serial PRIMARY KEY,
-  id_utensile bigint UNSIGNED NOT NULL REFERENCES utensile (id_utensile),
+  id_utensile bigint UNSIGNED NOT NULL REFERENCES utensile (id_utensile) ON UPDATE CASCADE ON DELETE CASCADE,
   inizio      datetime NOT NULL DEFAULT NOW(),
   fine        datetime DEFAULT NULL
 );
 
 CREATE TABLE studente_evento (
   id_studente_evento serial PRIMARY KEY,
-  id_studente        bigint UNSIGNED NOT NULL REFERENCES studente (id_studente),
-  id_evento          bigint UNSIGNED NOT NULL REFERENCES evento (id_evento)
+  id_studente        bigint UNSIGNED NOT NULL REFERENCES studente (id_studente) ON  UPDATE CASCADE ON DELETE CASCADE,
+  id_evento          bigint UNSIGNED NOT NULL REFERENCES evento (id_evento) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
  CREATE VIEW utensile_abilitato AS SELECT * FROM utensile WHERE locked = FALSE AND deleted = FALSE;
