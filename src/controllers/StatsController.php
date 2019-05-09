@@ -6,8 +6,8 @@ class StatsController{
     $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
     $data = array_map(function($entry){
       return [
-        'nome' => $entry['id_utensile'],
-        'categoria' => $entry['nome'],
+        'nome' => $entry['nome'],
+        'categoria' => $entry['categoria'],
       ];
     }, $dbres);
     $res->json($data);
