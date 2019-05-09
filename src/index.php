@@ -87,7 +87,8 @@ $klein->respond('POST', '/user/password', ['AuthController', 'modifyPasswordStud
 $klein->respond('GET', '/user/compagno', ['StudentController', 'getMates']);
 
 //Statistiche
-$klein->respond('GET', '/admin/statistiche/', ['StatsController', 'deletedTool']);
+$klein->respond('GET', '/admin/statistiche/utensili/eliminati', ['StatsController', 'deletedTool']);
+$klein->respond('GET', '/admin/statistiche/utensili/usati', ['StatsController', 'usedTool']);
 
 /*
  * UTILS
