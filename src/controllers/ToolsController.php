@@ -84,13 +84,12 @@ class ToolsController{
 			$parameters = $req->body();
 			$paramaters = json_decode($parameters, true);
 			$stm = $app->db->prepare('UPDATE utensile SET locked=true WHERE id_utensile=:id');
-			$stm->bindValue(":id", $paramaters['id']);
+			$stm->bindValue(":id", $paramaters["id"]);
 	    if($stm->execute()){
 				$res->json(["message" => "OK", "code" => 200 ]);
-		}
-		else{
-			$res->json(["message" => "Oggetto non bloccato", "code" => 500 ]);
-		}
+		  }else{
+			  $res->json(["message" => "Oggetto non bloccato", "code" => 500 ]);
+		  }
     }
 
     //DELETE /admin/utensile/blocco
@@ -98,13 +97,12 @@ class ToolsController{
 			$parameters = $req->body();
 			$paramaters = json_decode($parameters, true);
 			$stm = $app->db->prepare('UPDATE utensile SET locked=false WHERE id_utensile=:id');
-			$stm->bindValue(":id", $paramaters['id']);
+			$stm->bindValue(":id", $paramaters["id"]);
 	    if($stm->execute()){
 				$res->json(["message" => "OK", "code" => 200 ]);
-		}
-		else{
-			$res->json(["message" => "Oggetto non sbloccato", "code" => 500 ]);
-		}
+			}else{
+				$res->json(["message" => "Oggetto non sbloccato", "code" => 500 ]);
+			}
     }
 
 
