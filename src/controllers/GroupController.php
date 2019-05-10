@@ -40,7 +40,7 @@ class GroupController {
             $stm->execute();
 
             $res->json(['id_gruppo' => $idGruppo, 'studenti' => [ 'a' => +$parameters['id_studente'], 'b' => +$user['id_studente']]]);
-            
+
     }
 
     // DELETE /user/gruppo

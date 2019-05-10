@@ -112,7 +112,7 @@ class AuthController {
     
     
     else{
-      $res->json(["message" => "Vecchia Password non corretta", "code" => $stm->rowCount()]);
+      $res->json(["message" => "Vecchia Password non corretta", "code" => 501]);
     }
   }
 
@@ -138,7 +138,7 @@ class AuthController {
     
     
     else{
-      $res->json(["message" => "Vecchia Password non corretta", "code" => 500]);
+      $res->json(["message" => "Vecchia Password non corretta", "code" => 501]);
     }
   }
 
