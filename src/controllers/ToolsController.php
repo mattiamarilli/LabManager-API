@@ -35,6 +35,17 @@ class ToolsController{
 		}
     }
 
+    //POST /admin/releaseall
+
+    static function releaseAll($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('UPDATE evento SET (fine) VALUES (NOW()) WHERE fine = NULL');
+	    if($stm->execute()){
+				$res->json(["message" => "OK", "code" => 200 ]);
+		}
+    }
+
 	//PUT /admin/utensile
     static function modifyTool($req, $res, $service, $app){
 			$parameters = $req->body();
