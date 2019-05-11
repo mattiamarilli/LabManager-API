@@ -237,7 +237,7 @@ class ToolsController{
       }
       */
 
-      $stm = $app->db->prepare('INSERT INTO evento (id_utensile) VALUES (:id)');
+      $stm = $app->db->prepare('INSERT INTO evento (id_utensile,inizio) VALUES (:id,NOW())');
       $stm->bindValue(":id", $parameters['id_utensile']);
       $stm->execute();
       $idEvento = $app->db->lastInsertId();
