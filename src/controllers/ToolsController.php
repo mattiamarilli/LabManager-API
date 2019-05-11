@@ -40,7 +40,7 @@ class ToolsController{
     static function releaseAll($req, $res, $service, $app){
 			$parameters = $req->body();
 			$paramaters = json_decode($parameters, true);
-			$stm = $app->db->prepare('UPDATE evento SET (fine) VALUES (NOW()) WHERE fine = NULL');
+			$stm = $app->db->prepare('UPDATE evento SET fine = NOW() WHERE fine IS NULL');
 	    if($stm->execute()){
 				$res->json(["message" => "OK", "code" => 200 ]);
 		}
