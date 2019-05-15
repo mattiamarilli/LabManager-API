@@ -53,7 +53,8 @@ services:
     command: --api
     ports:
       - 80:80
-    #  - 443:443
+      - 443:443
+      - "9090:8080"
     networks:
       - proxy
     volumes:
@@ -68,8 +69,6 @@ services:
       - 'traefik.backend=traefik'
       - 'traefik.enable=true'
       - "traefik.frontend.rule=Host:traefik.marconi.demo.vivedo.me"
-    ports:
-     - "9090:8080"
 
 volumes:
   database-data:

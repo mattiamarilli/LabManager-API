@@ -9,9 +9,9 @@ defaultEntryPoints = ["http"]
 # Enable for HTTPS only
 #    [entryPoints.http.redirect]
 #    entryPoint = "https"
-#  [entryPoints.https]
-#  address = ":443"
-#  [entryPoints.https.tls]
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
 
 [retry]
 
