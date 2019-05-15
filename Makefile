@@ -43,3 +43,8 @@ db:
 .PHONY: testdata
 testdata: db
 	docker exec -it lm-mdb sh -c 'mysql -ulabmanager -plabmanager < /sql/test_data.sql'
+
+.PHONY: proxysetup
+	touch acme.json
+	chmod 600 acme.json
+	docker network create proxy

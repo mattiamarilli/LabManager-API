@@ -12,7 +12,6 @@ services:
     links:
       - php
 
-
   php:
     container_name: lm-php
     build:
@@ -21,6 +20,8 @@ services:
       - ../src:/src
     links:
       - mariadb:database
+    labels:
+      - traefik.enable=false
 
   composer:
     container_name: lm-cmp
@@ -29,6 +30,8 @@ services:
     command: install
     volumes:
       - ..:/app
+    labels:
+      - traefik.enable=false
 
   mariadb:
     container_name: lm-mdb
@@ -42,6 +45,33 @@ services:
     volumes:
       - database-data:/var/lib/mysql
       - ../sql:/sql
+    labels:
+      - traefik.enable=false
+  
+  traefik:
+    image: traefik:alpine
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../traefik.toml:/traefik.toml
+      - ../acme.json:/acme.json
+    container_name: traefik
+    expose:
+      - 8080
+    labels:
+      - "traefik.port=8080"
+      - 'traefik.backend=traefik'
+      - 'traefik.enable=true'
+      - "traefik.frontend.rule=Host:traefik.marconi.demo.vivedo.me"
 
 volumes:
   database-data:
+
+networks:
+  proxy:
+    external: true

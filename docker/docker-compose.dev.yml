@@ -14,4 +14,9 @@ services:
     ports:
       - 8000:80
     labels:
-      - "traefik.frontend.rule=Host:api.forum.vivedo.me"
+      - traefik.backend=blog
+      - traefik.frontend.rule=Host:api.marconi.demo.vivedo.me
+      - traefik.docker.network=proxy
+      - traefik.port=80
+    networks:
+      - proxy
