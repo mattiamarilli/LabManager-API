@@ -1,7 +1,7 @@
-debug = false
+debug = true
 
-logLevel = "ERROR"
-defaultEntryPoints = ["https","http"]
+logLevel = "INFO"
+defaultEntryPoints = ["http"]
 
 [entryPoints]
   [entryPoints.http]
@@ -9,9 +9,9 @@ defaultEntryPoints = ["https","http"]
 # Enable for HTTPS only
 #    [entryPoints.http.redirect]
 #    entryPoint = "https"
-  [entryPoints.https]
-  address = ":443"
-  [entryPoints.https.tls]
+#  [entryPoints.https]
+#  address = ":443"
+#  [entryPoints.https.tls]
 
 [retry]
 
@@ -21,10 +21,10 @@ domain = "marconi.demo.vivedo.me"
 watch = true
 exposedByDefault = false
 
-[acme]
-email = "edoardo.viviani@gmail.com"
-storage = "acme.json"
-entryPoint = "https"
-onHostRule = true
-[acme.httpChallenge]
-entryPoint = "http"
+#[acme]
+#email = "edoardo.viviani@gmail.com"
+#storage = "acme.json"
+#entryPoint = "https"
+#onHostRule = true
+#[acme.httpChallenge]
+#entryPoint = "http"
