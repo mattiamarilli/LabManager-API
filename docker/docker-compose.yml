@@ -16,6 +16,8 @@ services:
       - 'traefik.backend=api'
       - 'traefik.enable=true'
       - "traefik.frontend.rule=Host:api.marconi.demo.vivedo.me"
+    networks:
+      - proxy
 
   php:
     container_name: lm-php
