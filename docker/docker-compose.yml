@@ -23,16 +23,6 @@ services:
     labels:
       - traefik.enable=false
 
-  composer:
-    container_name: lm-cmp
-    restart: 'no'
-    image: composer/composer:php7
-    command: install
-    volumes:
-      - ..:/app
-    labels:
-      - traefik.enable=false
-
   mariadb:
     container_name: lm-mdb
     image: mariadb
@@ -51,6 +41,7 @@ services:
   traefik:
     image: traefik:alpine
     restart: always
+    command: --api
     ports:
       - 80:80
       - 443:443
