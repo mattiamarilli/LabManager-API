@@ -18,7 +18,6 @@ services:
       - "traefik.frontend.rule=Host:api.marconi.demo.vivedo.me"
     networks:
       - proxy
-      - internal
 
   php:
     container_name: lm-php
@@ -31,7 +30,7 @@ services:
     labels:
       - traefik.enable=false
     networks:
-      - internal
+      - proxy
 
   mariadb:
     container_name: lm-mdb
@@ -48,7 +47,7 @@ services:
     labels:
       - traefik.enable=false
     networks:
-      - internal
+      - proxy
   
   traefik:
     image: traefik:alpine
