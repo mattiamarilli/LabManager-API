@@ -15,7 +15,7 @@ services:
       - 80
     labels:
       - "traefik.port=80"
-      - 'traefik.backend=traefik'
+      - 'traefik.backend=api'
       - 'traefik.enable=true'
       - "traefik.frontend.rule=Host:api.marconi.demo.vivedo.me"
 
