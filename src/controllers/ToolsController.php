@@ -149,6 +149,7 @@ class ToolsController{
         $stm = $app->db->prepare('INSERT INTO utensile (nome,id_categoria) VALUES (:nome,:id_categoria)');
         $stm->bindValue(":nome", $parameters['nome'] . ' ' . $i);
         $stm->bindValue(":id_categoria", $categoria['id_categoria']);
+        $stm->execute();
       }
       $res->json(["message" => "OK", "code" => 200 ]);
     }
