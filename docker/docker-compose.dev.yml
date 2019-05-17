@@ -11,12 +11,12 @@ services:
       PMA_PASSWORD: labmanager
     links:
       - mariadb:database
-    ports:
-      - 8000:80
+    expose:
+      - 80
     labels:
-      - traefik.backend=blog
-      - traefik.frontend.rule=Host:api.marconi.demo.vivedo.me
-      - traefik.docker.network=proxy
-      - traefik.port=80
+      - "traefik.port=80"
+      - 'traefik.backend=phpmyadmin'
+      - 'traefik.enable=true'
+      - "traefik.frontend.rule=Host:phpmyadmin.marconi.demo.vivedo.me"
     networks:
       - proxy
