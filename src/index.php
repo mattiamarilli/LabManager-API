@@ -44,6 +44,7 @@ $klein->respond('DELETE', '/admin/classe/enable', ['ClassController', 'disableCl
 
 //Utensili
 $klein->respond('GET', '/admin/utensile', ['ToolsController', 'getTools']);
+$klein->respond('GET', '/admin/isbeenused', ['ToolsController', 'getStudentUseTool']);
 $klein->respond('GET', '/admin/categoria', ['ToolsController', 'getCategories']);
 $klein->respond('POST', '/admin/utensile', ['ToolsController', 'addTool']);
 $klein->respond('PUT', '/admin/utensile', ['ToolsController', 'modifyTool']);
