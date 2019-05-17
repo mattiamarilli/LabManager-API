@@ -150,7 +150,7 @@ class ToolsController{
         $stm->bindValue(":nome", $parameters['nome'] . ' ' . $i);
         $stm->bindValue(":id_categoria", $categoria['id_categoria']);
       }
-    
+      $res->json(["message" => "OK", "code" => 200 ]);
     }
 
     //PUT /admin/categoria
