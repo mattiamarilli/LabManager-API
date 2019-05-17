@@ -66,7 +66,7 @@ class ToolsController{
     static function removeTool($req, $res, $service, $app){
 			$parameters = $req->body();
 			$paramaters = json_decode($parameters, true);
-			$stm = $app->db->prepare('DELETE FROM utensile WHERE id_utensile=:id');
+			$stm = $app->db->prepare('UPDATE utensile SET deleted=true WHERE id_utensile=:id');
 			$stm->bindValue(":id", $paramaters['id']);
 	    if($stm->execute()){
 				$res->json(["message" => "OK", "code" => 200 ]);
