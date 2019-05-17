@@ -135,15 +135,22 @@ class ToolsController{
 
     //POST /admin/categoria
     static function addCategory($req, $res, $service, $app){
-			$parameters = $req->body();
-			$stm = $app->db->prepare('INSERT INTO categoria (nome) VALUES (:nome)');
-			$stm->bindValue(":nome", $parameters);
-	    if($stm->execute()){
-				$res->json(["message" => "OK", "code" => 200 ]);
-		}
-		else{
-			$res->json(["message" => "Categoria non aggiunta", "code" => 500 ]);
-		}
+      $parameters = $req->body();
+      $parameters = json_decode($parameters, true);
+      $stm = $app->db->prepare('INSERT INTO categoria (nome) VALUES (:nome)');
+      $stm->bindValue(":nome", $parameters['nome']);
+      $stm->execute();
+
+      $stm = $app->db->prepare('SELECT * FROM categoria WHERE nome=:nome');
+      $stm->bindValue(":nome", $parameters['nome']);
+      $stm->execute();
+      $categoria = $stm->fetch(PDO::FETCH_ASSOC);
+      for ($i = 1; $i <= $parameters['quantita']; $i++) {
+        $stm = $app->db->prepare('INSERT INTO utensile (nome,id_categoria) VALUES (:nome,:id_categoria)');
+        $stm->bindValue(":nome", $parameters['nome'] . ' ' . $i);
+        $stm->bindValue(":id_categoria", $categoria['id_categoria']);
+      }
+    
     }
 
     //PUT /admin/categoria
