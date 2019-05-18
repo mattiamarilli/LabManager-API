@@ -318,15 +318,6 @@ class ToolsController{
 
       $res->json(["message" => "OK", "code" => 200]);
     }
-
-    static function storicoUtilizziClassi($req, $res, $service, $app){
-      $stm = $app->db->prepare('SELECT classe.nome AS classe, COUNT(studente.nome) AS utilizzi, MIN(evento.inizio) AS inizio, MAX(evento.fine) AS fine FROM studente_evento INNER JOIN studente ON studente_evento.id_studente=studente.id_studente INNER JOIN classe ON classe.id_classe=studente.id_classe INNER JOIN evento ON evento.id_evento=studente_evento.id_evento
-      GROUP BY classe.nome');
-        $stm->execute();
-        $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
-
-        $res->json($data);
-    }
 }
 
 
