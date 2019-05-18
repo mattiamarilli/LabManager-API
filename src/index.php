@@ -92,7 +92,7 @@ $klein->respond('GET', '/user/compagno', ['StudentController', 'getMates']);
 $klein->respond('GET', '/admin/statistiche/utensili/eliminati', ['StatsController', 'deletedTool']);
 $klein->respond('GET', '/admin/statistiche/utensili/usati', ['StatsController', 'usedTool']);
 $klein->respond('POST', '/admin/statistiche/utensili/restore', ['StatsController', 'restoreTool']);
-$klein->respond('GET', '/admin/statistiche/utensili/storico/classi', ['StatsController', 'storicoUtilizziClassi']);
+$klein->respond('GET', '/admin/statistiche/utensili/storico', ['StatsController', 'storicoUtilizziClassi']);
 
 /*
  * UTILS
