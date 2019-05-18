@@ -30,7 +30,7 @@ class StatsController{
   }
   
   static function restoreTool($req, $res, $service, $app){
-    $stm = $app->db->prepare('UPDATE deleted=false FROM utensile WHERE id_utensile=:id_utensile AND id_categoria=:id_categoria');
+    $stm = $app->db->prepare('UPDATE utensile SET deleted = false WHERE id_utensile = :id_utensile AND id_categoria=:id_categoria');
     $stm->bindValue(":id_utensile", $paramaters['id_utensile']);
     $stm->bindValue(":id_categoria", $paramaters['id_categoria']);
     $stm->execute();
