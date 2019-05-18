@@ -30,6 +30,8 @@ class StatsController{
   }
   
   static function restoreTool($req, $res, $service, $app){
+    $paramaters = $req->body();
+		$paramaters = json_decode($paramaters, true);
     $stm = $app->db->prepare('UPDATE utensile SET deleted = false WHERE id_utensile = :id_utensile AND id_categoria=:id_categoria');
     $stm->bindValue(":id_utensile", $paramaters['id_utensile']);
     $stm->bindValue(":id_categoria", $paramaters['id_categoria']);
