@@ -2,7 +2,7 @@
 class ToolsController{
     //GET /admin/utensile
     static function getTools($req, $res, $service, $app){
-        $stm = $app->db->prepare('SELECT u.id_utensile,u.nome,u.id_categoria,u.locked,u.segnala, c.nome AS categoria FROM utensile u INNER JOIN categoria c ON u.id_categoria=c.id_categoria');
+        $stm = $app->db->prepare('SELECT u.id_utensile,u.nome,u.id_categoria,u.locked,u.segnala, c.nome AS categoria FROM utensile u INNER JOIN categoria c ON u.id_categoria=c.id_categoria WHERE u.deleted=false');
         $stm->execute();
         $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
 
