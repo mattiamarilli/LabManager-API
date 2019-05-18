@@ -20,6 +20,24 @@ class ToolsController{
         $res->json($data);
     }
 
+    static function getStudentUseTool($req, $res, $service, $app){
+      $parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+      $stm = $app->db->prepare('SELECT studente.nome,studente.cognome FROM studente INNER JOIN studente_evento ON studente_evento.id_studente = studente.id_studente inner join evento on evento.id_evento = studente_evento.id_evento inner join utensile on utensile.id_utensile = evento.id_utensile where evento.id_utensile = :id_utensile and evento.fine IS null');
+      $stm->bindValue(":id_utensile", $paramaters['id_utensile']);
+      $stm->execute();
+      $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+      $data = array_map(function($entry){
+          return [
+              'nome' => $entry['nome'],
+              'cognome' => $entry['cognome'],
+          ];
+      }, $dbres);
+
+      $res->json($data);
+  }
+
      //POST /admin/utensile
     static function addTool($req, $res, $service, $app){
 			$parameters = $req->body();
@@ -32,6 +50,17 @@ class ToolsController{
 		}
 		else{
 			$res->json(["message" => "Utensile non aggiunto", "code" => 500 ]);
+		}
+    }
+
+    //POST /admin/releaseall
+
+    static function releaseAll($req, $res, $service, $app){
+			$parameters = $req->body();
+			$paramaters = json_decode($parameters, true);
+			$stm = $app->db->prepare('UPDATE evento SET fine = NOW() WHERE fine IS NULL');
+	    if($stm->execute()){
+				$res->json(["message" => "OK", "code" => 200 ]);
 		}
     }
 
@@ -55,7 +84,7 @@ class ToolsController{
     static function removeTool($req, $res, $service, $app){
 			$parameters = $req->body();
 			$paramaters = json_decode($parameters, true);
-			$stm = $app->db->prepare('DELETE FROM utensile WHERE id_utensile=:id');
+			$stm = $app->db->prepare('UPDATE utensile SET deleted=true WHERE id_utensile=:id');
 			$stm->bindValue(":id", $paramaters['id']);
 	    if($stm->execute()){
 				$res->json(["message" => "OK", "code" => 200 ]);
@@ -124,15 +153,23 @@ class ToolsController{
 
     //POST /admin/categoria
     static function addCategory($req, $res, $service, $app){
-			$parameters = $req->body();
-			$stm = $app->db->prepare('INSERT INTO categoria (nome) VALUES (:nome)');
-			$stm->bindValue(":nome", $parameters);
-	    if($stm->execute()){
-				$res->json(["message" => "OK", "code" => 200 ]);
-		}
-		else{
-			$res->json(["message" => "Categoria non aggiunta", "code" => 500 ]);
-		}
+      $parameters = $req->body();
+      $parameters = json_decode($parameters, true);
+      $stm = $app->db->prepare('INSERT INTO categoria (nome) VALUES (:nome)');
+      $stm->bindValue(":nome", $parameters['nome']);
+      $stm->execute();
+
+      $stm = $app->db->prepare('SELECT * FROM categoria WHERE nome=:nome');
+      $stm->bindValue(":nome", $parameters['nome']);
+      $stm->execute();
+      $categoria = $stm->fetch(PDO::FETCH_ASSOC);
+      for ($i = 1; $i <= $parameters['quantita']; $i++) {
+        $stm = $app->db->prepare('INSERT INTO utensile (nome,id_categoria) VALUES (:nome,:id_categoria)');
+        $stm->bindValue(":nome", $parameters['nome'] . ' ' . $i);
+        $stm->bindValue(":id_categoria", $categoria['id_categoria']);
+        $stm->execute();
+      }
+      $res->json(["message" => "OK", "code" => 200 ]);
     }
 
     //PUT /admin/categoria

@@ -11,7 +11,12 @@ services:
       PMA_PASSWORD: labmanager
     links:
       - mariadb:database
-    ports:
-      - 8000:80
+    expose:
+      - 80
     labels:
-      - "traefik.frontend.rule=Host:api.forum.vivedo.me"
+      - "traefik.port=80"
+      - 'traefik.backend=phpmyadmin'
+      - 'traefik.enable=true'
+      - "traefik.frontend.rule=Host:phpmyadmin.marconi.demo.vivedo.me"
+    networks:
+      - proxy
