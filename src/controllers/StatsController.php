@@ -28,4 +28,18 @@ class StatsController{
     }, $dbres);
     $res->json($data);
   }
+  
+  static function restoreTool($req, $res, $service, $app){
+    $stm = $app->db->prepare('UPDATE deleted=false FROM utensile WHERE id_utensile=:id_utensile AND id_categoria=:id_categoria');
+    $stm->bindValue(":id_utensile", $paramaters['id_utensile']);
+    $stm->bindValue(":id_categoria", $paramaters['id_categoria']);
+    $stm->execute();
+    if($stm->rowCount() > 0)
+		{
+			$res->json(["message" => "OK", "code" => 200 ]);
+		}
+		else{
+			$res->json(["message" => "Errore nel recuperare uno strumento", "code" => 500 ]);
+		}
+  }
 }
