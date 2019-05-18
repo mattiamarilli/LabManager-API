@@ -61,7 +61,7 @@ class StatsController{
             'fine' => $entry['fine'],
         ];
     }, $dbres);
-      $res->json(["message" => "Ok", "code" => 500, "data"=> $dbres ]);
+      $res->json(["message" => "Ok", "code" => 500, "data"=> $data ]);
     }else{
       $res->json(["message" => "Errore", "code" => 500 ]);
     }
