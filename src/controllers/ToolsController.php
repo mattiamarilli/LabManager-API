@@ -38,6 +38,23 @@ class ToolsController{
       $res->json($data);
   }
 
+  static function getToolUseStudent($req, $res, $service, $app){
+    $parameters = $req->body();
+    $paramaters = json_decode($parameters, true);
+    $stm = $app->db->prepare('SELECT utensile.nome from studente inner join studente_evento on studente_evento.id_studente = studente.id_studente inner join evento on evento.id_evento = studente_evento.id_evento inner join utensile on utensile.id_utensile = evento.id_utensile where studente_evento.id_studente = :id_studente and evento.fine IS null');
+    $stm->bindValue(":id_studente", $paramaters['id_studente']);
+    $stm->execute();
+    $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+    $data = array_map(function($entry){
+        return [
+            'nome' => $entry['nome'],
+        ];
+    }, $dbres);
+
+    $res->json($data);
+}
+
      //POST /admin/utensile
     static function addTool($req, $res, $service, $app){
 			$parameters = $req->body();
