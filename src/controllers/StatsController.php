@@ -50,12 +50,12 @@ class StatsController{
     //$paramaters = $req->headers();
     $paramaters = $req->body();
     $paramaters = json_decode($paramaters, true);
-    $stm = $app->db->prepare('SELECT classe.nome AS classe, COUNT(studente.nome) AS utilizzi, MIN(evento.inizio) AS inizio, MAX(evento.fine) AS fine FROM studente_evento INNER JOIN studente ON studente_evento.id_studente=studente.id_studente INNER JOIN classe ON classe.id_classe=studente.id_classe INNER JOIN evento ON evento.id_evento=studente_evento.id_evento WHERE evento.id_utensile=:id_utensile GROUP BY classe.nome');
-    $stm->bindValue(":id_utensile", $paramaters['id_utensile']);
+    $stm = $app->db->prepare('SELECT evento.id_utensile, classe.nome AS classe, COUNT(studente.nome) AS utilizzi, MIN(evento.inizio) AS inizio, MAX(evento.fine) AS fine FROM studente_evento INNER JOIN studente ON studente_evento.id_studente=studente.id_studente INNER JOIN classe ON classe.id_classe=studente.id_classe INNER JOIN evento ON evento.id_evento=studente_evento.id_evento GROUP BY evento.id_utensile, classe.nome');
     if($stm->execute()){
       $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
       $data = array_map(function($entry){
         return [
+            'id_utensile' => +$entry['id_utensile'],
             'classe' => $entry['classe'],
             'uttilizzi' => +$entry['uttilizzi'],
             'inizio' => $entry['inizio'],
