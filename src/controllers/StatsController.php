@@ -57,7 +57,7 @@ class StatsController{
         return [
             'id_utensile' => +$entry['id_utensile'],
             'classe' => $entry['classe'],
-            'uttilizzi' => +$entry['uttilizzi'],
+            'uttilizzi' => +$entry['utilizzi'],
             'inizio' => $entry['inizio'],
             'fine' => $entry['fine'],
         ];
