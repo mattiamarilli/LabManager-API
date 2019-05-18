@@ -16,7 +16,9 @@ class StatsController{
   }
 
   static function usedTool($req, $res, $service, $app){
-    $stm = $app->db->prepare('SELECT utensile.id_utensile, utensile.nome AS NomeUtensile, count(evento.id_utensile) AS utilizzi, SUM(TIMESTAMPDIFF(SECOND, inizio, fine)) AS secondi FROM evento INNER JOIN utensile ON evento.id_utensile = utensile.id_utensile WHERE utensile.deleted = false GROUP BY evento.id_utensile');
+    $stm = $app->db->prepare('SELECT utensile.id_utensile, utensile.nome AS NomeUtensile, count(evento.id_utensile) AS utilizzi 
+    FROM studente_evento INNER JOIN evento ON studente_evento.id_evento=evento.id_evento INNER JOIN utensile ON evento.id_utensile=utensile.id_utensile
+    WHERE utensile.deleted = false GROUP BY evento.id_utensile');
     $stm->execute();
     $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
     $data = array_map(function($entry){
