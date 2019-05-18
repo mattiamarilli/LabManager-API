@@ -21,6 +21,7 @@ class StatsController{
     $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
     $data = array_map(function($entry){
       return [
+        'id_utensile' => ]$entry['id_utensile'],
         'nome' => $entry['NomeUtensile'],
         'utilizzi' => +$entry['utilizzi'],
         'secondi' => +$entry['secondi']
