@@ -47,11 +47,10 @@ class StatsController{
   }
 
   static function storicoUtilizziClassi($req, $res, $service, $app){
-    $paramaters = $req->headers()['id_utensile'];
-    print_r($paramaters);exit;
+    $paramaters = $req->headers();
     $paramaters = json_decode($paramaters, true);
     $stm = $app->db->prepare('SELECT classe.nome AS classe, COUNT(studente.nome) AS utilizzi, MIN(evento.inizio) AS inizio, MAX(evento.fine) AS fine FROM studente_evento INNER JOIN studente ON studente_evento.id_studente=studente.id_studente INNER JOIN classe ON classe.id_classe=studente.id_classe INNER JOIN evento ON evento.id_evento=studente_evento.id_evento WHERE evento.id_utensile=:id_utensile GROUP BY classe.nome');
-    $stm->bindValue("id_utensile", $paramaters['id_utensile']);
+    $stm->bindValue(":id_utensile", $paramaters['id_utensile']);
     if($stm->execute()){
       $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
       $data = array_map(function($entry){
