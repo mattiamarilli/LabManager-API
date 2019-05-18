@@ -53,6 +53,14 @@ class StatsController{
     $stm->bindValue("id_utensile", $paramaters['id_utensile']);
     if($stm->execute()){
       $dbres = $stm->fetchAll(PDO::FETCH_ASSOC);
+      $data = array_map(function($entry){
+        return [
+            'classe' => $entry['classe'],
+            'uttilizzi' => +$entry['uttilizzi'],
+            'inizio' => $entry['inizio'],
+            'fine' => $entry['fine'],
+        ];
+    }, $dbres);
       $res->json(["message" => "Ok", "code" => 500, "data"=> $dbres ]);
     }else{
       $res->json(["message" => "Errore", "code" => 500 ]);
