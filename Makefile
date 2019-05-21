@@ -10,7 +10,7 @@ upd:
 
 .PHONY: up
 up:
-	$(PRODCOMPOSE) up/Users/andreapaolo/Desktop/Progetti/Progetto Marconi/LabManager-API/Makefile
+	$(PRODCOMPOSE) up
 
 .PHONY: down
 down:
