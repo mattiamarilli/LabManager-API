@@ -7,7 +7,7 @@
 class IndexController {
 
     static function get($req, $res, $service, $app){
-        $res->json(['message' => 'Welcome to LabManager API', 'version' => 'alpha']);
+        $res->json(['message' => 'Welcome to LabManager API', 'version' => 'alpha-0.2']);
     }
 
 }
