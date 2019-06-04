@@ -33,6 +33,7 @@ class StudentController {
         $parameters = $req->body();
         $parameters = json_decode($parameters, true);
         $password = $parameters['nome'] . "." . $parameters['cognome'];
+        $password = strtolower($password);
         $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
 		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password, id_gruppo) VALUES (:nome, :cognome, :id_classe, :username, :password, null)');
 		$stm->bindValue(":nome", $parameters['nome']);
