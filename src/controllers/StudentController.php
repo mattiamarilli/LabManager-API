@@ -35,7 +35,8 @@ class StudentController {
         $password = $parameters['nome'] . "." . $parameters['cognome'];
         $password = strtolower($password);
         $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
-		$stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password, id_gruppo) VALUES (:nome, :cognome, :id_classe, :username, :password, null)');
+        $username = strtolower($username);
+        $stm = $app->db->prepare('INSERT INTO studente (nome, cognome, id_classe, username, password, id_gruppo) VALUES (:nome, :cognome, :id_classe, :username, :password, null)');
 		$stm->bindValue(":nome", $parameters['nome']);
 		$stm->bindValue(":cognome", $parameters['cognome']);
 		$stm->bindValue(":id_classe", $parameters['id_classe']);
@@ -52,11 +53,14 @@ class StudentController {
     static function modifyStudent($req, $res, $service, $app){
         $parameters = $req->body();
         $parameters = json_decode($parameters, true);
-        $stm = $app->db->prepare('UPDATE studente SET nome = :nome, cognome = :cognome, id_classe = :id_classe WHERE id_studente = :id_studente');
+        $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
+        $username = strtolower($username);
+        $stm = $app->db->prepare('UPDATE studente SET nome = :nome, cognome = :cognome, username=:usernamne,id_classe = :id_classe WHERE id_studente = :id_studente');
 		$stm->bindValue(":nome", $parameters['nome']);
 		$stm->bindValue(":cognome", $parameters['cognome']);
 		$stm->bindValue(":id_classe", $parameters['id_classe']);
-		$stm->bindValue(":id_studente", $parameters['id_studente']);
+        $stm->bindValue(":id_studente", $parameters['id_studente']);
+        $stm->bindValue(":username", $username);
 		$stm->execute();
         if($stm->rowCount() > 0){
             $res->json(["message" => "OK", "code" => 200 ]);

@@ -21,6 +21,7 @@ class TeacherController{
       $password = $parameters['nome'] . "." . $parameters['cognome'];
       $password = strtolower($password);
       $username = $parameters['nome'] . "." . $parameters['cognome']; //username nel formato "nome.cognome"
+      $username = strtolower($username);
       $stm = $app->db->prepare('INSERT INTO docente (nome, cognome, username, password, admin) VALUES (:nome, :cognome, :username, :password, :admin)');
       $stm->bindValue(":nome", $parameters['nome']);
       $stm->bindValue(":cognome", $parameters['cognome']);
@@ -40,6 +41,7 @@ class TeacherController{
       $parameters = $req->body();
       $parameters = json_decode($parameters, true);
       $username = $parameters['nome'] . "." . $parameters['cognome'];
+      $username = strtolower($username);
       $stm = $app->db->prepare('UPDATE docente SET nome = :nome, cognome = :cognome, username = :username WHERE id_docente = :id_docente');
       $stm->bindValue(":nome", $parameters['nome']);
       $stm->bindValue(":cognome", $parameters['cognome']);
