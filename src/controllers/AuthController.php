@@ -161,6 +161,7 @@ class AuthController {
       }, $dbres);
 
       $password = $data[0]['nome'] . '.' . $data[0]['cognome'];
+      $password = strtolower($password);
       $stm = $app->db->prepare("UPDATE studente SET password=:password WHERE id_studente =:id");
       $stm->bindValue(":id", $parameters['id']);
       $stm->bindValue(":password", $password);
@@ -195,6 +196,7 @@ class AuthController {
       }, $dbres);
 
       $password = $data[0]['nome'] . '.' . $data[0]['cognome'];
+      $password = strtolower($password);
       $stm = $app->db->prepare("UPDATE docente SET password=:password WHERE id_docente =:id");
       $stm->bindValue(":id", $parameters['id']);
       $stm->bindValue(":password", $password);
