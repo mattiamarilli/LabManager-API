@@ -48,6 +48,14 @@ services:
       - traefik.enable=false
     networks:
       - proxy
+      
+  composer:
+    container_name: lm-cmp
+    restart: 'no'
+    image: composer/composer:php7
+    command: install
+    volumes:
+      - ..:/app
   
   traefik:
     image: traefik:alpine
